@@ -1,0 +1,64 @@
+/* Profile.css */
+.profile-bg-danger {
+    background-color: #dc3545; /* Bootstrap Danger color */
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.display-4 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    border: none;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  
+}
+
+.profile-card {
+    background-color: #fff;
+    border-radius: .25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 500px;
+    text-align: center;
+}
+
+.profile-header {
+    margin-bottom: 1.5rem;
+}
+
+.profile-icon {
+    font-size: 4rem;
+    color: #007bff;
+}
+
+.profile-title {
+    margin-top: 20px;
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+
+.profile-text {
+    color: #6c757d;
+}
+
+.profile-email {
+    margin-bottom: 1.5rem;
+}
+
+.profile-button {
+    margin: .5rem;
+}

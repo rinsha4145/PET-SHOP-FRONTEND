@@ -1,0 +1,99 @@
+/* Navbar.css */
+
+.cart-count {
+  position: absolute;
+  top: 15px;
+  right: 115px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 6px;
+  font-size: 10px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  background-color: hsl(0, 0%, 100%);
+  width: 100%; 
+  z-index: 1000; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 10px;
+    
+}
+
+
+/* Adjust the navbar height as needed */
+.navbar-logo img {
+  height: 50px;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: 40px;
+  margin: 0; 
+  padding: 0; 
+}
+
+.navbar-menu li a {
+  color: black;
+  text-decoration: none; 
+  transition: color 0.3s ease;
+}
+
+.navbar-menu li a:hover {
+  color: #b78829;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.sign-log img, .cart-icon img {
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.sign-log img:hover, .cart-icon img:hover {
+  transform: scale(1.1);
+}
+
+
+
+.search-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.search-container input {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  background-color: #c7c7c748;
+}
+
+.search-container button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #555;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.search-container button:hover {
+  background-color: #777;
+}

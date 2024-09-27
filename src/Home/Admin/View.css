@@ -1,0 +1,83 @@
+/* UserDetails.css */
+
+.view-container {
+    display: flex;
+    padding: 10px;
+    margin: 50px auto;
+    max-width: 1200px; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-top: 80px;
+  }
+  
+  .user-details {
+    flex: 1;
+    padding: 10px;
+    border-right: 2px solid #ddd;
+   
+  }
+  
+  .user-details h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .user-details p {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .user-details p strong {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .user-details button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .user-details button:hover {
+    background-color: #444;
+  }
+  
+  .cart-products {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .cart-products h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .cart-products ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cart-products li {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .cart-products li strong {
+    font-weight: bold;
+  }
+ .cart-products button{
+    margin-left: 100px;
+ }  

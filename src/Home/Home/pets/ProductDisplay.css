@@ -1,0 +1,138 @@
+.product-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+  padding: 20px;
+  max-width: 1200px;
+  margin-left: 130px;
+ 
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-details {
+  text-align: center;
+  max-width: 600px;
+  padding: 10px;
+}
+
+.product-title {
+  font-size: 2rem;
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.product-brand {
+  font-size: 1.2rem;
+  color: #777;
+  margin: 0 0 10px;
+}
+
+.product-description {
+  font-size: 1rem;
+  color: #555;
+  margin: 0 0 10px;
+}
+
+.product-size {
+  font-size: 1rem;
+  color: #555;
+  margin: 0 0 10px;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #555;
+  margin: 10px 0;
+}
+
+.add-to-basket {
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-to-basket:hover {
+  background-color: #070707;
+}
+
+related-products {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.related-products h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.related-products-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.related-product {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.related-product:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.related-product img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.related-product p {
+  margin: 10px 0;
+}
+
+.related-product .price {
+  font-weight: bold;
+  color: #d9534f;
+}
+
+.related-product button {
+  background-color: #5bc0de; /* Bootstrap's info color */
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.related-product button:hover {
+  background-color: #31b0d5; /* Darker info color */
+  transform: scale(1.05);
+}

@@ -1,0 +1,56 @@
+.container {
+  padding-top: 70px;
+  width: 500Px;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  background-image: url('../Assets/PET\ \(3\).jpg');
+  background-repeat: no-repeat;
+  background-size:contain;
+  background-position:80PX;
+    font-family: Arial, sans-serif;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 860PX;
+  
+}
+  
+  .text-section {
+    flex: 1;
+   margin-left: -800px;
+    padding-top: 55px;
+    
+  }
+  
+  .bestsellers {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #888;
+  }
+  
+  .title {
+    font-size: 48px;
+    margin: 10px 0;
+    margin-left: -500px;
+    font-weight: bold;
+  }
+  
+  .shop-now {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-top: 0px;
+    background: none;
+    border: 1px solid #000;
+    color: #000;
+    cursor: pointer;
+  }
+  .shop-now:hover{
+    background-color:#555 ;
+    color: white;
+  }
+  
+
+  
+  

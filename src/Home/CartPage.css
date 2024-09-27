@@ -1,0 +1,114 @@
+/* CartPage.css */
+
+.cart-container {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  padding-top: 60px;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.cart-item-image {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.cart-item-details h4 {
+  font-size: 1.25rem;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.cart-item-details p {
+  margin: 0;
+  color: #777;
+}
+
+.quantity-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.quantity-buttons button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.quantity-buttons button:hover {
+  background-color: #0056b3;
+}
+
+input[type="number"] {
+  height: 20px;
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  margin-top: 18px;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.buy-now-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buy-now-button:hover {
+  background-color: #218838;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  color: #444;
+}

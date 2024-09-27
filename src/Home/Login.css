@@ -1,0 +1,115 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.login-left {
+  background-color: #555;
+  color: white;
+  padding: 40px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  text-align: center;
+  width: 300px;
+  height: 300px;
+}
+
+.login-left h2 {
+  color: white;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+}
+
+.login-right {
+  background-color: white;
+  padding: 40px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 300px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-right h2 {
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.form-group-login {
+  margin-bottom: 15px;
+  position: relative; 
+}
+
+.form-group-login input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+;
+  height: 25px;
+}
+
+.form-group-login label {
+  color: #555;
+}
+
+.password-container {
+  position: relative; 
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: -20px; 
+  top: 6%;
+  transform: translateY(-48%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #444;
+  font-size: 12px;
+}
+.toggle-password-btn:hover{
+  background-color: transparent;
+  color:#444;
+}
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #555;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background-color: #444; 
+}
+.forgot a{
+  color: rgb(18, 18, 187);
+  text-decoration: none;
+}
+.forgot a:hover{
+  text-decoration: underline;
+}
+
+.register-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.register-link a {
+  color: rgb(18, 18, 187);
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

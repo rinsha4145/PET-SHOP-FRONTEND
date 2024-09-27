@@ -1,0 +1,91 @@
+/* Navbar container */
+.navbara {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    background-color: hsl(0, 0%, 100%);
+    width: 100%; 
+    z-index: 1000; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 15px 30px;
+    transition: background-color 0.3s ease;
+  }
+  
+  
+  .navbar-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  /* Profile icon */
+  .profile {
+    font-size: 32px;
+    margin-left: 100px;
+    color: #333;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .profile:hover {
+    transform: scale(1.1);
+    color: #b78829;
+  }
+  
+  
+  .admin-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .admin-text:hover {
+    color: #b78829;
+  }
+  
+  
+  .logout-section {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+    color: #333;
+    margin-left: 900px; 
+    transition: color 0.3s ease;
+  }
+  
+  .logout-section:hover {
+    color: #b78829;
+  }
+  
+  .logout-icon {
+    font-size: 24px;
+  }
+  
+  .logout-text {
+    font-size: 18px;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .navbar-content {
+      gap: 10px;
+    }
+  
+    .profile-icon, .logout-icon {
+      font-size: 26px;
+    }
+  
+    .admin-text {
+      font-size: 16px;
+    }
+  
+    .logout-text {
+      font-size: 14px;
+    }
+  }
+  
