@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { DataContext } from '../../FetchData';
+import { DataContext } from '../Context/DataContext';
 import './DisplayItem.css';
 import { useNavigate } from 'react-router-dom';
 

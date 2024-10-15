@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
-import logo from '../Assets/logo.png';
-import { DataContext } from './FetchData';
+import logo from '../../../Assets/logo.png';
+import { DataContext } from '../Context/DataContext';
 
 const Login = () => {
   const { handleChange, handleSubmit, datas } = useContext(DataContext);

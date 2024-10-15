@@ -2,7 +2,7 @@ import React from 'react';
 import './NavbarAdmin.css';  
 import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { useContext } from 'react';
-import { DataContext } from '../FetchData';
+import { DataContext } from '../User/Context/DataContext';
 import { useNavigate } from 'react-router-dom';
 
 const NavbarAdmin = () => {

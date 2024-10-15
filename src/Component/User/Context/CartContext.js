@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { DataContext } from '../FetchData';
+import { DataContext } from '../Context/DataContext';
 
 export const MyCartContext = createContext();
 

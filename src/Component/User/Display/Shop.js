@@ -1,13 +1,12 @@
 
 import React, { useContext } from 'react';
-import { DataContext } from '../../FetchData';
+import { DataContext } from '../Context/DataContext';
 import './DisplayItem.css';
 import { useNavigate } from 'react-router-dom';
 
-function DisplaySmallItem() {
+function Shop() {
   const context = useContext(DataContext);
-  const navigate = useNavigate();
-  
+  const navigate=useNavigate()
 
   if (!context) {
     return <p>Context not available</p>;
@@ -25,14 +24,12 @@ function DisplaySmallItem() {
 
   return (
     <div className="top-products">
-      <h2>OUR PRODUCTS</h2>
+      <h2>SHOP IT NOW</h2>
       <div className="product-list">
-        {data
-          .filter(product => product.category === 'small') 
-          .map((product) => (
+        {data.map((product) => (
             <div key={product.id} className="product-card">
               {product.title==='Offer'? <div className="offer-tag">Offer</div>:""}
-              <img src={product.src} alt={product.productName}  onClick={() => navigate(`/productdetails/${product.id}`)}  />
+              <img src={product.src} alt={product.productName} onClick={() => navigate(`/productdetails/${product.id}`)} />
               <p>{product.productName}</p>
               <p className="price">{product.price}</p>
             </div>
@@ -43,4 +40,4 @@ function DisplaySmallItem() {
   );
 }
 
-export default DisplaySmallItem;
+export default Shop;

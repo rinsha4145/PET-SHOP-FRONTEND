@@ -1,11 +1,11 @@
 import "./Support.css"; // Import the CSS file
 import { useNavigate } from "react-router-dom";
-import Collection from '../../../Assets/self-collect.png';
-import product from '../../../Assets/product-return.png';
-import club from '../../../Assets/pet.png';
-import sub from '../../../Assets/subscription.png';
-import app from '../../../Assets/technical-support.png';
-import other from '../../../Assets/other.png';
+import Collection from '../../../../Assets/self-collect.png';
+import product from '../../../../Assets/product-return.png';
+import club from '../../../../Assets/pet.png';
+import sub from '../../../../Assets/subscription.png';
+import app from '../../../../Assets/technical-support.png';
+import other from '../../../../Assets/other.png';
 
 const Support = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import './CartPage.css';
-import { MyCartContext } from './Home/CartContext';
+import { MyCartContext } from '../../Context/CartContext';
 
 
 

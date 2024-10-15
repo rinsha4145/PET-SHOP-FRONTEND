@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { FetchData } from './Home/FetchData';
+import { FetchData } from './Component/User/Context/DataContext';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import Cartcontext from './Home/Home/CartContext';
+import Cartcontext from './Component/User/Context/CartContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

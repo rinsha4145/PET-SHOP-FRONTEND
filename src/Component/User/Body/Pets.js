@@ -1,11 +1,11 @@
 import React from 'react';
 import './Pets.css';
-import dog from '../../Assets/dog.jpg';
-import cat from '../../Assets/cat.png';
-import small from '../../Assets/small.png';
-import fish from '../../Assets/fish.jpg';
-import reptile from '../../Assets/reptile.png';
-import bird from '../../Assets/bird.jpg';
+import dog from '../../../Assets/dog.jpg';
+import cat from '../../../Assets/cat.png';
+import small from '../../../Assets/small.png';
+import fish from '../../../Assets/fish.jpg';
+import reptile from '../../../Assets/reptile.png';
+import bird from '../../../Assets/bird.jpg';
 import { useNavigate } from 'react-router-dom';
 
 const categories = [

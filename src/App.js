@@ -1,29 +1,29 @@
 import React, { useContext } from 'react';
-import Navbar from './Home/Home/Navbar';
-import Login from './Home/Login';
-import SignUp from './Home/Signup';
+import Navbar from './Component/User/Navbar/Navbar';
+import Login from './Component/User/Login/Login';
+import SignUp from './Component/User/Signup/Signup';
 import { Routes, Route } from 'react-router-dom';
-import DisplayDogItem from './Home/Home/pets/DisplayDogItem';
-import DisplayCatItem from './Home/Home/pets/DisplayCatItem';
-import DisplaySmallItem from './Home/Home/pets/DisplaySmallItem';
-import Home from './Home/Home/Home';
-import Footer from './Home/Home/Footer';
-import Shop from './Home/Home/pets/Shop';
-import ProductDisplay from './Home/Home/pets/ProductDisplay';
-import Collection from './Home/Home/Support/collection-delivery';
-import Support from './Home/Home/Support/Support';
-import Profile from './Home/Profile';
-import CartPage from './Home/CartPage';
-import Payment from './Home/Home/Payment';
-import AdminPage from './Home/Admin/AdminPage';
-import NavbarAdmin from './Home/Admin/NavbarAdmin';
-import { DataContext } from './Home/FetchData';
-import Users from './Home/Admin/Users'
-import View from './Home/Admin/View';
-import Products from './Home/Admin/Products';
-import Update from './Home/Admin/Update';
-import Add from './Home/Admin/Add';
-import Pets from './Home/Home/Pets';
+import DisplayDogItem from './Component/User/Display/DisplayDogItem';
+import DisplayCatItem from './Component/User/Display/DisplayCatItem';
+import DisplaySmallItem from './Component/User/Display/DisplaySmallItem';
+import Home from './Component/User/Body/Home';
+import Footer from './Component/User/Body/Footer';
+import Shop from './Component/User/Display/Shop';
+import ProductDisplay from './Component/User/Display/ProductDisplay';
+import Collection from './Component/User/Navbar/Support/collection-delivery'
+import Support from './Component/User/Navbar/Support/Support'
+import Profile from './Component/User/Navbar/Profile/Profile';
+import CartPage from './Component/User/Navbar/Cart/CartPage'
+import Payment from './Component/User/Payment/Payment';
+import AdminPage from './Component/Admin/AdminPage';
+import NavbarAdmin from './Component/Admin/NavbarAdmin';
+import { DataContext } from './Component/User/Context/DataContext'
+import Users from './Component/Admin/Users/Users'
+import View from './Component/Admin/Users/View';
+import Products from './Component/Admin/Products/Products';
+import Update from './Component/Admin/Products/Update'
+import Add from './Component/Admin/Products/Add';
+import Pets from './Component/User/Body/Pets';
 
 
 

@@ -1,49 +1,6 @@
-// import React, { useContext } from 'react';
-// import { DataContext } from '../../FetchData';
-// import './DisplayItem.css';
-// import { useNavigate } from 'react-router-dom';
-// function DisplayCatItem() {
-//   const context = useContext(DataContext);
-//   const navigate = useNavigate()
 
-
-//   if (!context) {
-//     return <p>Context not available</p>;
-//   }
-
-//   const { data, error } = context;
-
-//   if (error) {
-//     return <p>Error loading data: {error}</p>;
-//   }
-
-//   if (!data) {
-//     return <p>Loading...</p>;
-//   }
-
-//   return (
-//     <div className="top-products">
-//       <h2>Our Products</h2>
-//       <div className="product-list">
-//         {data
-//           .filter(product => product.category === 'cat') // Filter products by category
-//           .map((product) => (
-//             <div key={product.id} className="product-card">
-//               {product.offer && <div className="offer-tag">Offer</div>}
-//               <img src={product.src} alt={product.productName}  onClick={() => navigate(`/productdetails/${product.id}`)} />
-//               <p>{product.productName}</p>
-//               <p className="price">{product.price}</p>
-//             </div>
-//           ))}
-          
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default DisplayCatItem;
 import React, { useContext, useState } from 'react';
-import { DataContext } from '../../FetchData';
+import { DataContext } from '../Context/DataContext';
 import './DisplayItem.css';
 import { useNavigate } from 'react-router-dom';
 

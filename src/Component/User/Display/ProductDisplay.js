@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./ProductDisplay.css";
-import { MyCartContext } from "../CartContext";
-import { DataContext } from "../../FetchData";
+import { MyCartContext } from "../Context/CartContext";
+import { DataContext } from "../Context/DataContext";
 
 const ProductDisplay = () => {
   const context = useContext(DataContext); 

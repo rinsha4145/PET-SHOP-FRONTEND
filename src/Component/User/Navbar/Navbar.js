@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import './Navbar.css';
-import logo from '../../Assets/logo.png';
-import cartimg from '../../Assets/cart.png';
-import userIcon from '../../Assets/user.png';
+import logo from '../../../Assets/logo.png';
+import cartimg from '../../../Assets/cart.png';
+import userIcon from '../../../Assets/user.png';
 import { useNavigate, Link } from 'react-router-dom';
-import { DataContext } from '../FetchData'; 
-import { MyCartContext } from './CartContext';
+import { DataContext } from '../Context/DataContext'; 
+import { MyCartContext } from '../Context/CartContext';
 
 const Navbar = () => {
   const navigate = useNavigate();

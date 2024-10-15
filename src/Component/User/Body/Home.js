@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../Header.js'
-import Pets from '../Home/Pets.js'
-import Offer from './pets/Offer.js'
+import Header from './Header.js'
+import Pets from './Pets.js'
+import Offer from './Offer.js'
 
 function Home() {
   return (

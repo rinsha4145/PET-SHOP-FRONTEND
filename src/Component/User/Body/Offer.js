@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { DataContext } from '../../FetchData';
-import './DisplayItem.css';
+import { DataContext } from '../Context/DataContext';
+import './Offer.css';
 import { useNavigate } from 'react-router-dom';
 
 function Offer() {

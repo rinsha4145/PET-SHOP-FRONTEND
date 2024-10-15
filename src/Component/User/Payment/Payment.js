@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react';
 import './Payment.css';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios'; 
-import { DataContext } from '../FetchData';
-import { MyCartContext } from './CartContext';
+import { DataContext } from '../Context/DataContext';
+import { MyCartContext } from '../Context/CartContext';
 
 function Payment() {
   const { current } = useContext(DataContext);

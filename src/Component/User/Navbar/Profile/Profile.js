@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
-import { DataContext } from './FetchData';
+import { DataContext } from '../../Context/DataContext';
 import './Profile.css';
-import { MyCartContext } from './Home/CartContext';
+import { MyCartContext } from '../../Context/CartContext';
 
 function Profile() {
     const { current,setCurrent  } = useContext(DataContext);
