@@ -9,8 +9,8 @@ export function FetchData({ children }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('Fetching data from http://localhost:3000/newProducts'); // Debugging
-    fetch('http://localhost:3000/newProducts')
+    console.log('Fetching data from http://localhost:4000/products'); // Debugging
+    fetch('http://localhost:4000/products')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -47,37 +47,43 @@ export function FetchData({ children }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get("http://localhost:3000/Users");
-      const users = response.data;
+      const response = await axios.post('http://localhost:4000/login', {
+        email: datas.email, 
+        password: datas.password
+      });
+      console.log('Login successful:', response.data);
+      navigate('/');
+      // const user = users.find((user) => user.email === datas.email && user.password === datas.password && !user.admin);
+      // const adminUser = users.find((user) => user.email === datas.email && user.password === datas.password && user.admin);
 
-      const user = users.find((user) => user.email === datas.email && user.password === datas.password && !user.admin);
-      const adminUser = users.find((user) => user.email === datas.email && user.password === datas.password && user.admin);
-
-      if (user) {
-        if(user.blocked===false){
-        localStorage.setItem("current", JSON.stringify(user));
-        setCurrent(user);
-        alert('Login successfully completed');
-        setDatas({ email: '', password: '' });
-        navigate('/');
-        }
-        else{
-          alert('Your account is blocked. Please contact support.');
+      // if (user) {
+      //   if(user.blocked===false){
+      //   localStorage.setItem("current", JSON.stringify(user));
+      //   setCurrent(user);
+      //   alert('Login successfully completed');
+      //   setDatas({ email: '', password: '' });
+      //   navigate('/');
+      //   }
+      //   else{
+      //     alert('Your account is blocked. Please contact support.');
           
-        }
-      } else if (adminUser) {
-        localStorage.setItem("admin", JSON.stringify(adminUser));
-        setAdmin(adminUser);
-        alert('Admin login successfully completed');
-        setDatas({ email: '', password: '' });
-        navigate('/admin');
-      } else {
-        alert('Incorrect email or password');
-      }
+      //   }
+      // } else if (adminUser) {
+      //   localStorage.setItem("admin", JSON.stringify(adminUser));
+      //   setAdmin(adminUser);
+      //   alert('Admin login successfully completed');
+      //   setDatas({ email: '', password: '' });
+      //   navigate('/admin');
+      // } else {
+      //   alert('Incorrect email or password');
+      // }
     } catch (error) {
       console.log("Error occurred during login:", error);
+      alert(error.response?.data?.message || 'Login failed');
+
     }
   };
+
 
  
   const handleCreateAccount = () => {

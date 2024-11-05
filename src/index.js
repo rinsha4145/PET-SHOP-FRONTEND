@@ -5,6 +5,7 @@ import { FetchData } from './Component/User/Context/DataContext';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import Cartcontext from './Component/User/Context/CartContext';
+import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

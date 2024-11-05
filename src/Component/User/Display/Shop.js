@@ -29,7 +29,7 @@ function Shop() {
         {data.map((product) => (
             <div key={product.id} className="product-card">
               {product.title==='Offer'? <div className="offer-tag">Offer</div>:""}
-              <img src={product.src} alt={product.productName} onClick={() => navigate(`/productdetails/${product.id}`)} />
+              <img src={product.image} alt={product.productName} onClick={() => navigate(`/productdetails/${product.id}`)} />
               <p>{product.productName}</p>
               <p className="price">{product.price}</p>
             </div>

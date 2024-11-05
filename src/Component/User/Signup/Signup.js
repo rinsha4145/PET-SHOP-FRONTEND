@@ -12,10 +12,10 @@ const SignUp = () => {
     phone: '',
     gender: '',
     address: '',
-    admin: false,
-    blocked: false,
-    orderdetails: {},
-    cart: []
+    // admin: false,
+    // blocked: false,
+    // orderdetails: {},
+    // cart: []
   });
 
   const [errors, setErrors] = useState({});
@@ -88,14 +88,14 @@ const SignUp = () => {
 
       try {
        
-        const emailCheckResponse = await axios.get(`http://localhost:3000/Users?email=${inputs.email}`);
+        // const emailCheckResponse = await axios.get(`http://localhost:4000/users?email=${inputs.email}`);
 
-        if (emailCheckResponse.data.length > 0) {
-          setErrors({ email: 'Email is already registered.' });
-          console.log("Email already exists");
-          return;
-        } 
-        const response = await axios.post("http://localhost:3000/Users", inputs);
+        // if (emailCheckResponse.data.length > 0) {
+        //   setErrors({ email: 'Email is already registered.' });
+        //   console.log("Email already exists");
+        //   return;
+        // } 
+        const response = await axios.post("http://localhost:4000/signup", inputs);
         console.log('User registered:', response.data);
         setInputs({
           name: '',
@@ -105,9 +105,9 @@ const SignUp = () => {
           phone: '',
           gender: '',
           address: '',
-          admin: false,
-          blocked: false,
-          cart: []
+          // admin: false,
+          // blocked: false,
+          // cart: []
         });
 
         alert('Registration successfully completed');

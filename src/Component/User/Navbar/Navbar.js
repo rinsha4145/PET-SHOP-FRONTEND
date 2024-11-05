@@ -1,20 +1,21 @@
 import React, { useContext, useState } from 'react';
-import './Navbar.css';
 import logo from '../../../Assets/logo.png';
 import cartimg from '../../../Assets/cart.png';
 import userIcon from '../../../Assets/user.png';
+import wishblack from '../../../Assets/wishlistblack.png';
 import { useNavigate, Link } from 'react-router-dom';
 import { DataContext } from '../Context/DataContext'; 
 import { MyCartContext } from '../Context/CartContext';
+// import { WishlistContext } from '../Context/WishlistContext'; // import WishlistContext
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { current,data } = useContext(DataContext); 
+  const { current, data } = useContext(DataContext); 
   const { cart } = useContext(MyCartContext); 
+  // const { wishlist } = useContext(WishlistContext); // use WishlistContext
   const [searchQuery, setSearchQuery] = useState('');
- 
-  const[expanded,setExpanded]=useState(false)
-  
+  const [expanded, setExpanded] = useState(false);
+
   const handleProfile = () => {
     if (current) {
       navigate('/profile'); 
@@ -26,69 +27,82 @@ const Navbar = () => {
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-  
-      // Convert search query to lowercase
       const query = searchQuery.toLowerCase();
-  
-      // Perform navigation based on query
+
       if (query === "dog") {
         navigate("/dog");
       } else if (query === "cat") {
         navigate("/cat");
-      }  else {
-        // Find product by name
+      } else {
         const product = data.find((product) => product.productName.toLowerCase() === query);
-  
+
         if (product) {
           navigate(`/productdetails/${product.id}`);
         } else {
           navigate("/search");
         }
       }
-  
-      // Reset search query and collapse search bar (if applicable)
       setExpanded(false);
       setSearchQuery("");
-  
       console.log('Searching for:', searchQuery);
     }
   };
-  
 
   const totalItemsInCart = cart.reduce((total, item) => total + item.qty, 0);
+  // const totalItemsInWishlist = wishlist.length; // Count items in wishlist
 
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        <img src={logo} alt="Petshop logo" onClick={() => navigate('/')} />
+    <nav className="navbar flex justify-around items-center bg-white w-full z-[1000] shadow-[0_2px_4px_rgba(0,0,0,0.1)] fixed pt-2.5 left-0 top-0">
+      <div className="navbar-logo flex items-center gap-2">
+        <img src={logo} alt="Petshop logo" className="h-[50px] cursor-pointer mb-[5px] " onClick={() => navigate('/')} />
       </div>
-      <ul className="navbar-menu">
-        <li><Link to="/shop">SHOP</Link></li>
-        <li><Link to='/pets'>MY PETS</Link></li>
-        <li><Link to="/support">SUPPORT</Link></li>
-        <li><a href="#booking">BOOKINGS</a></li>
-        {/* <li><a href="#findus">FIND US</a></li> */}
+      <ul className="navbar-menu flex gap-10 m-0 p-0 list-none">
+        <li><Link to="/shop" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana">SHOP</Link></li>
+        <li><Link to="/pets" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana">MY PETS</Link></li>
+        <li><Link to="/support" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana">SUPPORT</Link></li>
+        <li><a href="#booking" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana">BOOKINGS</a></li>
       </ul>
-      <div className="navbar-actions">
-        <div className="search-container">
+      <div className="navbar-actions flex items-center gap-10">
+        <div className="search-container flex items-center space-x-2 mt-[2px] mb-[5px]">
           <input
             type="text"
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyPress={handleSearch}
+            className="rounded bg-[#c7c7c748] mr-2 p-2 border-none"
           />
-          <button onClick={handleSearch}>Search</button>
+          <button
+            onClick={handleSearch}
+            className="rounded bg-[#555] text-white cursor-pointer mt-0.5 px-4 py-2 border-none hover:bg-[#777]"
+          >
+            Search
+          </button>
         </div>
-        <div className="cart-icon">
-          <img src={userIcon} onClick={handleProfile} alt="User profile" />
-          {current && <span style={{ fontSize: '11.5px' }}>{current.name}</span>} 
+        <div className="cart-icon  relative">
+          <img src={userIcon} onClick={handleProfile} alt="User profile" className="h-[30px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110" />
+          {current && <span className="text-[11.5px]">{current.name}</span>}
         </div>
-        {current &&
-          <div className="cart-icon">
-            <img src={cartimg} alt="Cart" onClick={() => navigate('/cartpage')} />
-            {totalItemsInCart > 0 && <span className="cart-count">{totalItemsInCart}</span>} 
-          </div>}
+        {/* {current && ( */}
+          <>
+            <div className="wishlist-icon relative">
+              <img src={wishblack} alt="Wishlist" onClick={() => navigate('/wishlist')} className="h-[30px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110" />
+              {totalItemsInCart > 0 && (
+                <span className="wishlist-count absolute bg-red-500 text-white text-[10px] px-1.5 py-[3px] rounded-full right-[85px] top-[15px]">
+                  {totalItemsInCart}
+                </span>
+              )}
+            </div>
+            <div className="cart-icon  relative">
+              <img   src={cartimg} alt="Cart" onClick={() => navigate('/cartpage')} className="h-[30px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110" />
+              {totalItemsInCart > 0 && (
+                <span className="cart-count absolute bg-red-500 text-white text-[10px] px-1.5 py-[3px] rounded-full right-[115px] top-[15px]">
+                  {totalItemsInCart}
+                </span>
+              )}
+            </div>
+          </>
+        {/* )} */}
       </div>
     </nav>
   );

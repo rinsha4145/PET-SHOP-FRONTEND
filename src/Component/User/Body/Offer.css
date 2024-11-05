@@ -1,66 +1,31 @@
-TopProducts.css
-.filter-box {
+/* Top Products Container */
+.top-products {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    width: 100%;
+    height: 100%;
     display: flex;
-    align-items:end;
-    margin-bottom: 20px;
-  }
-  
-  .filter-box label {
-    font-size: 16px;
-    margin-right: 10px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .filter-box select {
-    padding: 8px 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .filter-box select:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-h2 {
+.top-products h2 {
     font-size: 50px;
     color: #333; 
     text-align: center;
     margin-bottom: 10px;
-}
-
-
-.top-products {
-       
-        font-family: Arial, sans-serif;
-        background-color: white;
-        width: 100%;
-        height: 100%;
-        position: relative;
-        overflow-x: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-}
-
-
-.top-products h2 {
-    margin-bottom: 20px;
     padding-top: 50px;
 }
 
-
+/* Product List Grid */
 .product-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr); 
     gap: 60px; 
 }
 
+/* Product Card */
 .product-card {
     background-color: white;
     border: 1px solid #e1e1e1;
@@ -69,7 +34,7 @@ h2 {
     height: 350px;
     padding: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative; 
+    position: relative;
 }
 
 .product-card:hover {
@@ -79,28 +44,29 @@ h2 {
     cursor: pointer;
 }
 
-
-/* Product Image Styles */
+/* Product Image */
 .product-card img {
-    width: 80%;
+    width: 60%;
     height: auto;
-    margin-top: -15px;
+    margin-top: -9px;
     margin-bottom: 10px;
+    margin-left: 50px;
 }
 
-/* Product Description Styles */
+/* Product Description */
 .product-card p {
     margin: 10px 0;
     color: #333;
+    font-size: small;
 }
 
 .product-card .price {
-    font-weight:bold;
+    font-weight: bold;
     color: #008000;
     font-size: 19px;
 }
 
-/* Offer Tag Styles */
+/* Offer Tag */
 .product-card .offer-tag {
     position: absolute;
     top: 10px;
@@ -112,3 +78,49 @@ h2 {
     font-size: 12px;
 }
 
+/* Button Styles */
+.product-card button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.product-card button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.product-card button:active {
+    transform: scale(0.98);
+}
+
+/* Icon Container */
+.product-card .icon-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.product-card .icon-container i {
+    font-size: 18px;
+    color: #333;
+    background-color: white;
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card .icon-container i:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

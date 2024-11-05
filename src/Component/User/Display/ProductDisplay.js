@@ -50,7 +50,7 @@ const ProductDisplay = () => {
       <div className="product-page">
         <div className="product-info">
           <div className="product-image">
-            <img src={product.src} alt={product.productName} />
+            <img src={product.image} alt={product.productName} />
           </div>
         </div>
         <div className="product-details">
@@ -75,7 +75,7 @@ const ProductDisplay = () => {
         <div className="related-products-list">
           {relatedProducts.map((relatedProduct) => (
             <div key={relatedProduct.id} className="related-product">
-              <img src={relatedProduct.src} alt={relatedProduct.productName} />
+              <img src={relatedProduct.image} alt={relatedProduct.productName} />
               <p>{relatedProduct.productName}</p>
               <p className="price">{relatedProduct.price}</p>
             </div>

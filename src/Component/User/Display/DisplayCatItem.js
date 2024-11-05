@@ -61,7 +61,7 @@ function DisplayCatItem() {
             <div key={product.id} className="product-card">
              {product.title==='Offer'? <div className="offer-tag">Offer</div>:""}
               <img 
-                src={product.src} 
+                src={product.image} 
                 alt={product.productName} 
                 onClick={() => navigate(`/productdetails/${product.id}`)} 
               />
