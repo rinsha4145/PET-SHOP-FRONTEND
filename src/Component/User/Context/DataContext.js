@@ -93,10 +93,10 @@ export function FetchData({ children }) {
     }
   };
 
- useEffect(()=>{
-  const user=Cookies.get('user')
-  setCurrent(JSON.parse(user))
- },[])
+//  useEffect(()=>{
+//   const user=Cookies.get('user')
+//   setCurrent(JSON.parse(user))
+//  },[])
  
   const handleCreateAccount = () => {
     navigate('/signup');
