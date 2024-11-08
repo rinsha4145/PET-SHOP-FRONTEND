@@ -1,8 +1,8 @@
 import React from 'react';
 import './Pets.css';
-import dog from '../../../Assets/dog.jpg';
-import cat from '../../../Assets/cat.png';
-import small from '../../../Assets/small.png';
+import dog from '../../../Assets/dog.gif';
+import cat from '../../../Assets/cat.gif';
+import small from '../../../Assets/small.gif';
 import fish from '../../../Assets/fish.jpg';
 import reptile from '../../../Assets/reptile.png';
 import bird from '../../../Assets/bird.jpg';
@@ -34,7 +34,7 @@ const Pets = () => {
                         className="image"
                         onClick={() => handleclick(category.path)} 
                     />
-                    <p>{category.name}</p>
+                    {/* <p>{category.name}</p> */}
                 </div>
             ))}
         </div>

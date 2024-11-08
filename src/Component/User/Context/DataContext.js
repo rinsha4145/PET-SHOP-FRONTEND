@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Cookies from 'js-cookie'
 export const DataContext = createContext();
 
 export function FetchData({ children }) {
@@ -51,7 +51,12 @@ export function FetchData({ children }) {
         email: datas.email, 
         password: datas.password
       });
-      console.log('Login successful:', response.data);
+     
+      Cookies.set('user',JSON.stringify(response.data.user))
+      console.log(response.data.user)
+      Cookies.set('token',JSON.stringify(response.data.userToken))
+      console.log(response.data.userToken)
+      console.log('Login successful');
       navigate('/');
       // const user = users.find((user) => user.email === datas.email && user.password === datas.password && !user.admin);
       // const adminUser = users.find((user) => user.email === datas.email && user.password === datas.password && user.admin);
@@ -78,8 +83,10 @@ export function FetchData({ children }) {
       //   alert('Incorrect email or password');
       // }
     } catch (error) {
-      console.log("Error occurred during login:", error);
-      alert(error.response?.data?.message || 'Login failed');
+      // console.log("", error);
+     console.log('Error occurred during login:',error.response  );
+      
+      alert(error.response.data.message || 'Login failed');
 
     }
   };

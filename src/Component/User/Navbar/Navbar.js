@@ -52,15 +52,15 @@ const Navbar = () => {
   // const totalItemsInWishlist = wishlist.length; // Count items in wishlist
 
   return (
-    <nav className="navbar flex justify-around items-center bg-white w-full z-[1000] shadow-[0_2px_4px_rgba(0,0,0,0.1)] fixed pt-2.5 left-0 top-0">
+    <nav className="navbar flex justify-around items-center bg-white w-full z-[1000] h-20 shadow-[0_2px_4px_rgba(0,0,0,0.1)] fixed pt-2.5 left-0 top-0">
       <div className="navbar-logo flex items-center gap-2">
         <img src={logo} alt="Petshop logo" className="h-[50px] cursor-pointer mb-[5px] " onClick={() => navigate('/')} />
       </div>
       <ul className="navbar-menu flex gap-10 m-0 p-0 list-none">
-        <li><Link to="/shop" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana">SHOP</Link></li>
-        <li><Link to="/pets" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana">MY PETS</Link></li>
-        <li><Link to="/support" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana">SUPPORT</Link></li>
-        <li><a href="#booking" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana">BOOKINGS</a></li>
+        <li><Link to="/shop" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana text-lg">SHOP</Link></li>
+        <li><Link to="/pets" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana text-lg">MY PETS</Link></li>
+        <li><Link to="/support" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana text-lg">SUPPORT</Link></li>
+        <li><a href="#booking" className="text-black no-underline transition-[color] duration-[0.3s] ease-[ease] hover:text-[#b78829] font-verdana text-lg">BOOKINGS</a></li>
       </ul>
       <div className="navbar-actions flex items-center gap-10">
         <div className="search-container flex items-center space-x-2 mt-[2px] mb-[5px]">
@@ -80,13 +80,13 @@ const Navbar = () => {
           </button>
         </div>
         <div className="cart-icon  relative">
-          <img src={userIcon} onClick={handleProfile} alt="User profile" className="h-[30px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110" />
+          <img src={userIcon} onClick={handleProfile} alt="User profile" className="h-[40px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 " />
           {current && <span className="text-[11.5px]">{current.name}</span>}
         </div>
         {/* {current && ( */}
           <>
             <div className="wishlist-icon relative">
-              <img src={wishblack} alt="Wishlist" onClick={() => navigate('/wishlist')} className="h-[30px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110" />
+              <img src={wishblack} alt="Wishlist" onClick={() => navigate('/wishlist')} className=" h-[40px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110" />
               {totalItemsInCart > 0 && (
                 <span className="wishlist-count absolute bg-red-500 text-white text-[10px] px-1.5 py-[3px] rounded-full right-[85px] top-[15px]">
                   {totalItemsInCart}
@@ -94,7 +94,7 @@ const Navbar = () => {
               )}
             </div>
             <div className="cart-icon  relative">
-              <img   src={cartimg} alt="Cart" onClick={() => navigate('/cartpage')} className="h-[30px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110" />
+              <img   src={cartimg} alt="Cart" onClick={() => navigate('/cartpage')} className="h-[40px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110" />
               {totalItemsInCart > 0 && (
                 <span className="cart-count absolute bg-red-500 text-white text-[10px] px-1.5 py-[3px] rounded-full right-[115px] top-[15px]">
                   {totalItemsInCart}

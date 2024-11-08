@@ -7,7 +7,7 @@ function DisplayDogItem() {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const [filterOption, setFilterOption] = useState('all');
-
+console.log(filterOption)
 
   if (!context) {
     return <p>Context not available</p>;
@@ -66,7 +66,7 @@ function DisplayDogItem() {
               <img
                 src={product.image}
                 alt={product.productName}
-                onClick={() => navigate(`/productdetails/${product.id}`)}
+                onClick={() => navigate(`/productdetails/${product._id}`)}
               />
               <p>{product.productName}</p>
               <p className="price">{product.price}</p>

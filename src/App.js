@@ -47,7 +47,7 @@ function App() {
             <Route path="/cat" element={<DisplayCatItem />} />
             <Route path="/small" element={<DisplaySmallItem />} />
             <Route path="/shop" element={<Shop />} />
-            <Route path="/productdetails/:productId" element={<ProductDisplay />} />
+            <Route path="/productdetails/:_id" element={<ProductDisplay />} />
             <Route path="/cartpage" element={<CartPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/support" element={<Support />} />

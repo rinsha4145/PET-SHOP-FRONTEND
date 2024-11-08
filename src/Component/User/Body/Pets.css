@@ -20,9 +20,9 @@
   
  
   .image {
-    border-radius: 50%;
-    width: 180px; 
-    height: 180px;
+    border-radius: 25%;
+    width: 220px; 
+    height: 220px;
     object-fit: cover;
     background-color: antiquewhite;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
