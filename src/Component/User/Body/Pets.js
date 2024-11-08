@@ -3,9 +3,9 @@ import './Pets.css';
 import dog from '../../../Assets/dog.gif';
 import cat from '../../../Assets/cat.gif';
 import small from '../../../Assets/small.gif';
-import fish from '../../../Assets/fish.jpg';
-import reptile from '../../../Assets/reptile.png';
-import bird from '../../../Assets/bird.jpg';
+import fish from '../../../Assets/fish.gif';
+import reptile from '../../../Assets/reptile.gif';
+import bird from '../../../Assets/bird.gif';
 import { useNavigate } from 'react-router-dom';
 
 const categories = [

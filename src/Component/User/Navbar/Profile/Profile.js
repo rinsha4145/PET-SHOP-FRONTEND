@@ -4,18 +4,26 @@ import { FaUser } from 'react-icons/fa';
 import { DataContext } from '../../Context/DataContext';
 import './Profile.css';
 import { MyCartContext } from '../../Context/CartContext';
+import axios from 'axios';
 
 function Profile() {
     const { current,setCurrent  } = useContext(DataContext);
     const {clearCart}=useContext(MyCartContext)
     const navigate=useNavigate();
     
-    const handleLogout = () => {
-        setCurrent(null);
-        clearCart()
-        localStorage.removeItem('current');
-        navigate('/login');
-      };
+        const handleLogout = async (e) => {
+            e.preventDefault();
+            try {
+              await axios.post('http://localhost:4000/logout');
+              setCurrent(null);
+              clearCart()
+              alert('Logout successful');
+            } catch (error) {
+              console.error('Error occurred during logout:', error.response);
+              alert(error.response?.data?.message || 'Logout failed');
+            }
+          };
+      
     
    
 

@@ -30,7 +30,7 @@ function Offer() {
       <p>Here are some of our offer products</p>
       <div className="product-list">
         {offerProducts.map((product) => (
-          <div key={product.id} className="product-card">
+          <div key={product._id} className="product-card">
             <div className="offer-tag">Offer</div>
             <div className="icon-container">
               <i className="wishlist-icon"><FaHeart className="icon wishlist-icon" title="Add to Wishlist" /></i> {/* Replace with actual wishlist icon */}

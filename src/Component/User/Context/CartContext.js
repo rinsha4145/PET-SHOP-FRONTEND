@@ -10,19 +10,19 @@ function Cartcontext({ children }) {
   const { current } = useContext(DataContext);
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    if (current) {
-      const fetchCart = async () => {
-        try {
-          const response = await axios.get(`http://localhost:3000/Users/${current.id}`);
-          setCart(response.data.cart);
-        } catch (error) {
-          alert(error);
-        }
-      };
-      fetchCart();
-    }
-  }, [current]);
+  // useEffect(() => {
+  //   if (current) {
+  //     const fetchCart = async () => {
+  //       try {
+  //         const response = await axios.get(`http://localhost:3000/Users/${current.id}`);
+  //         setCart(response.data.cart);
+  //       } catch (error) {
+  //         alert(error);
+  //       }
+  //     };
+  //     fetchCart();
+  //   }
+  // }, [current]);
 
   const clearCart = () => {
     setCart([]);

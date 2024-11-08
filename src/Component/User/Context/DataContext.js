@@ -51,13 +51,15 @@ export function FetchData({ children }) {
         email: datas.email, 
         password: datas.password
       });
-     
+
       Cookies.set('user',JSON.stringify(response.data.user))
       console.log(response.data.user)
       Cookies.set('token',JSON.stringify(response.data.userToken))
       console.log(response.data.userToken)
       console.log('Login successful');
+
       navigate('/');
+     
       // const user = users.find((user) => user.email === datas.email && user.password === datas.password && !user.admin);
       // const adminUser = users.find((user) => user.email === datas.email && user.password === datas.password && user.admin);
 
@@ -91,7 +93,10 @@ export function FetchData({ children }) {
     }
   };
 
-
+ useEffect(()=>{
+  const user=Cookies.get('user')
+  setCurrent(JSON.parse(user))
+ },[])
  
   const handleCreateAccount = () => {
     navigate('/signup');
