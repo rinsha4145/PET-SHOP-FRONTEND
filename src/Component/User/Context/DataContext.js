@@ -31,11 +31,13 @@ export function FetchData({ children }) {
     email: '',
     password: ''
   });
-  const storedcurrent = localStorage.getItem("current");
-  const [current, setCurrent] = useState(storedcurrent ? JSON.parse(storedcurrent) : null);
+  // const storedcurrent = localStorage.getItem("current");
+  // const [current, setCurrent] = useState(storedcurrent ? JSON.parse(storedcurrent) : null);
 
   const storedadmin = localStorage.getItem("admin");
   const [admin, setAdmin] = useState(storedadmin ? JSON.parse(storedadmin) : null);
+
+
 
   const navigate = useNavigate();
 
@@ -50,12 +52,12 @@ export function FetchData({ children }) {
       const response = await axios.post('http://localhost:4000/login', {
         email: datas.email, 
         password: datas.password
-      });
+      },{withCredentials:true});
 
-      Cookies.set('user',JSON.stringify(response.data.user))
-      console.log(response.data.user)
-      Cookies.set('token',JSON.stringify(response.data.userToken))
-      console.log(response.data.userToken)
+      // Cookies.set('user',JSON.stringify(response.data.user))
+      // console.log(response.data.user)
+      // Cookies.set('token',JSON.stringify(response.data.userToken))
+      // console.log(response.data.userToken)
       console.log('Login successful');
 
       navigate('/');
@@ -92,11 +94,28 @@ export function FetchData({ children }) {
 
     }
   };
-
-//  useEffect(()=>{
-//   const user=Cookies.get('user')
-//   setCurrent(JSON.parse(user))
-//  },[])
+  const [current, setCurrent] = useState();
+  useEffect(() => {
+    // Retrieve the cookie value
+    const userCookie = Cookies.get("user");
+    console.log("Cookie value:", userCookie);
+  
+    if (userCookie) {
+      // Check if the cookie starts with 'j:' and remove it
+      const userJson = userCookie.startsWith("j:") ? userCookie.slice(2) : userCookie;
+  
+      try {
+        const user = JSON.parse(userJson);
+        console.log("Parsed User Object:", user);
+        console.log("Username:", user.email);
+        setCurrent(user)
+      } catch (error) {
+        console.error("Failed to parse user cookie:", error);
+      }
+    } else {
+      console.log("User cookie not found");
+    }
+  }, [datas]);
  
   const handleCreateAccount = () => {
     navigate('/signup');

@@ -26,8 +26,6 @@ import Add from './Component/Admin/Products/Add';
 import Pets from './Component/User/Body/Pets';
 
 
-
-
 function App() {
   const { admin } = useContext(DataContext);
 
@@ -60,6 +58,8 @@ function App() {
           <>
            <NavbarAdmin />
             <Routes>         
+            #
+            
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/users" element={<Users />} />
             <Route path="/view/:id" element={<View />} />

@@ -6,6 +6,8 @@ import './Profile.css';
 import { MyCartContext } from '../../Context/CartContext';
 import axios from 'axios';
 
+
+
 function Profile() {
     const { current,setCurrent  } = useContext(DataContext);
     const {clearCart}=useContext(MyCartContext)
@@ -14,10 +16,10 @@ function Profile() {
         const handleLogout = async (e) => {
             e.preventDefault();
             try {
-              await axios.post('http://localhost:4000/logout');
-              setCurrent(null);
-              clearCart()
+              await axios.post('http://localhost:4000/logout',{},{withCredentials:true});
+              setCurrent(null)
               alert('Logout successful');
+              navigate("/")
             } catch (error) {
               console.error('Error occurred during logout:', error.response);
               alert(error.response?.data?.message || 'Logout failed');

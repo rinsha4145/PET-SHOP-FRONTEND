@@ -13,11 +13,12 @@ import { MyCartContext } from '../Context/CartContext';
 const Navbar = () => {
   const navigate = useNavigate();
   const { current, data } = useContext(DataContext); 
+  
+  
   const { cart } = useContext(MyCartContext); 
   // const { wishlist } = useContext(WishlistContext); // Use WishlistContext
   const [searchQuery, setSearchQuery] = useState('');
   const [expanded, setExpanded] = useState(false);
-
   const handleProfile = () => {
     if (current) {
       navigate('/profile'); 
@@ -53,6 +54,8 @@ const Navbar = () => {
   };
 
   const totalItemsInCart = cart.reduce((total, item) => total + item.qty, 0);
+  console.log(current);
+  
   // const totalItemsInWishlist = wishlist.length; // Count items in wishlist
 
   return (
