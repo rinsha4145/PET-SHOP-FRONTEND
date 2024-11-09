@@ -115,7 +115,7 @@ export function FetchData({ children }) {
     } else {
       console.log("User cookie not found");
     }
-  }, [datas]);
+  },[datas]);
  
   const handleCreateAccount = () => {
     navigate('/signup');
