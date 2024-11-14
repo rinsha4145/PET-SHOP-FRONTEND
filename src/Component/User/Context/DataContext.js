@@ -30,9 +30,6 @@ export function FetchData({ children }) {
       });
   }, []);
 
-  
-  // const storedcurrent = localStorage.getItem("current");
-  // const [current, setCurrent] = useState(storedcurrent ? JSON.parse(storedcurrent) : null);
 
   const storedadmin = localStorage.getItem("admin");
   const [admin, setAdmin] = useState(storedadmin ? JSON.parse(storedadmin) : null);
@@ -53,39 +50,9 @@ export function FetchData({ children }) {
         email: datas.email, 
         password: datas.password
       });
-
-      // Cookies.set('user',JSON.stringify(response.data.user))
-      // console.log(response.data.user)
-      // Cookies.set('token',JSON.stringify(response.data.userToken))
-      // console.log(response.data.userToken)
       console.log('Login successful');
       setDatas({ email: '', password: '' });
       navigate('/');
-     
-      // const user = users.find((user) => user.email === datas.email && user.password === datas.password && !user.admin);
-      // const adminUser = users.find((user) => user.email === datas.email && user.password === datas.password && user.admin);
-
-      // if (user) {
-      //   if(user.blocked===false){
-      //   localStorage.setItem("current", JSON.stringify(user));
-      //   setCurrent(user);
-      //   alert('Login successfully completed');
-      //   setDatas({ email: '', password: '' });
-      //   navigate('/');
-      //   }
-      //   else{
-      //     alert('Your account is blocked. Please contact support.');
-          
-      //   }
-      // } else if (adminUser) {
-      //   localStorage.setItem("admin", JSON.stringify(adminUser));
-      //   setAdmin(adminUser);
-      //   alert('Admin login successfully completed');
-      //   setDatas({ email: '', password: '' });
-      //   navigate('/admin');
-      // } else {
-      //   alert('Incorrect email or password');
-      // }
     } catch (error) {
       // console.log("", error);
      console.log('Error occurred during login:',error.response  );

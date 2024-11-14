@@ -69,8 +69,8 @@ function Cart() {
           ) : (
             <div className="space-y-8">
               {cart.map((item,index) => (
-                <div key={item.productId._id} className="flex items-start gap-6 border-b border-gray-200 pb-6">
-                  <img key={index} src={item.productId.image} alt="productimage" className="w-24 h-24 object-cover rounded" />
+                <div key={item._id} className="flex items-start gap-6 border-b border-gray-200 pb-6">
+                  <img key={item._id} src={item.productId.image} alt="productimage" className="w-24 h-24 object-cover rounded" />
                   <div className="flex-1">
                     <h4 className="text-lg font-semibold">{item.productId.productName}</h4>
                     

@@ -27,7 +27,7 @@ const ProductDisplay = () => {
   }
 
   const product = data.find((item) => item._id === _id);
-  // console.log("first",_id)
+  console.log("first1234567890",product)
   if (!product) {
     return <p>Product not found</p>;
   }

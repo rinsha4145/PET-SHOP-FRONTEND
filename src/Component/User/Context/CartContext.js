@@ -76,12 +76,12 @@ console.log("cart..............",cart)
   
 
   const addToCart = async (product) => {
-    console.log("product123",product)
+    console.log("product123123123",product)
         try {
           if(current){
             const response = await axiosInstance.post("/addtocart",{productId:product});
-            // console.log("cartsend.products",response.data.cartsend)
-            // console.log("updateCart.products",response.data.updatedcart)
+            console.log("cartsend.products",response.data.cartsend)
+            console.log("updateCart.products",response.data.updatedcart)
             if(response.data.updatedcart){
               setCart(response.data.updatedcart.products)
             }else if(response.data.cartsend){
@@ -174,6 +174,7 @@ console.log("cart..............",cart)
           console.error("Error updating wishlist", error);
         }
       }
+      
       const removewish = async (productId) => {
         console.log("first",productId)
         const response = await axiosInstance.delete('/removewish',{data:{productId:productId}})

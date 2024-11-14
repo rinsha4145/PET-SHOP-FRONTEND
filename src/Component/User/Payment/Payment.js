@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 import { DataContext } from '../Context/DataContext';
 import { MyCartContext } from '../Context/CartContext';
+import axiosInstance from '../../../AxiosIntance';
 
 function Payment() {
-  const { current } = useContext(DataContext);
+  const { current,setCurrent } = useContext(DataContext);
   const { cart, setCart } = useContext(MyCartContext); 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -28,17 +29,30 @@ function Payment() {
       [name]: value,
     }));
   };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Payment details submitted:', formData);
 
-    if (!current || !current.id) {
-      alert('You must be logged in to complete the payment.');
-      navigate('/login'); 
-      return;
-    }
+    setTimeout(async () => {
+      
+   
+    
+    const response=await axiosInstance.delete('/clearcart')
+      setCurrent(response.data.cart)
+      alert('Payment successful!');
+      navigate('/cart'); 
+    
+    
+    
+    }, 2000);
+  };
 
+  const handledelivary= async()=>{
+     const response=await axiosInstance.post('/createorder')
+     console.log('rrrrr',response);
+    
+     setCart(response.data.savedOrder.products)
+     navigate('/order')
+  }
     
     const updatedFormData = {
       ...formData,
@@ -50,29 +64,29 @@ function Payment() {
       orderDetails: updatedFormData 
     };
 
-    setTimeout(async () => {
-      try {
+    // setTimeout(async () => {
+    //   try {
        
-        const response = await axios.put(`http://localhost:3000/Users/${current.id}`, updatedUser);
-        console.log('Order and user details updated successfully:', response.data);
+    //     const response = await axios.put(`http://localhost:3000/Users/${current.id}`, updatedUser);
+    //     console.log('Order and user details updated successfully:', response.data);
         
-        setCart([]); 
-        localStorage.removeItem('cartData'); 
+    //     setCart([]); 
+    //     localStorage.removeItem('cartData'); 
 
-        alert('Payment successful! Your order has been saved.');
-        navigate('/');
-      } catch (error) {
-        console.error('Error submitting order and updating user:', error);
-        alert('There was an issue with your payment. Please try again.');
-      }
-    }, 100);
-  };
+    //     alert('Payment successful! Your order has been saved.');
+    //     navigate('/');
+    //   } catch (error) {
+    //     console.error('Error submitting order and updating user:', error);
+    //     alert('There was an issue with your payment. Please try again.');
+    //   }
+    // }, 100);
+  
 
   return (
     <div className='payment-container'>
       <div className="form-group">
         <h2>Payment Page</h2>
-        <form onSubmit={handleSubmit} className="payment-form">
+        <form onSubmit={()=>handleSubmit} className="payment-form">
           <div>
             <input
               type="text"
@@ -154,7 +168,7 @@ function Payment() {
             />
           </div>
           
-          <button type="submit" className="submit-button">Pay Now</button>
+          <button type="submit" className="submit-button" onClick={handledelivary}>Pay Now</button>
         </form>
       </div>
     </div>
