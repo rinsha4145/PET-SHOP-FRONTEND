@@ -4,7 +4,7 @@ import dog from '../../../Assets/dog.gif';
 import cat from '../../../Assets/cat.gif';
 import small from '../../../Assets/small.gif';
 import fish from '../../../Assets/fish.gif';
-import reptile from '../../../Assets/reptile.gif';
+// import reptile from '../../../Assets/reptile.gif';
 import bird from '../../../Assets/bird.gif';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const categories = [
     { name: 'Cat', image: cat, path: '/cat' },
     { name: 'Small Animal', image: small, path: '/small' },
     { name: 'Fish', image: fish, path: '/fish' },
-    { name: 'Reptile', image: reptile, path: '/reptile' },
+    // { name: 'Reptile', image: reptile, path: '/reptile' },
     { name: 'Bird & Wildlife', image: bird, path: '/bird' },
 ];
 

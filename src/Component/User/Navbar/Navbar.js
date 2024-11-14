@@ -4,18 +4,19 @@ import cartimg from '../../../Assets/cart.png';
 import userIcon from '../../../Assets/user.png';
 import wishblack from '../../../Assets/wishlistblack.png';
 import profile from '../../../Assets/profile.png';
+import order from '../../../Assets/order.png'
 
 import { useNavigate, Link } from 'react-router-dom';
 import { DataContext } from '../Context/DataContext'; 
 import { MyCartContext } from '../Context/CartContext';
-// import { WishlistContext } from '../Context/WishlistContext'; // Import WishlistContext
+
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { current, data } = useContext(DataContext); 
   
   
-  const { cart } = useContext(MyCartContext); 
+  const { cart,wish } = useContext(MyCartContext); 
   // const { wishlist } = useContext(WishlistContext); // Use WishlistContext
   const [searchQuery, setSearchQuery] = useState('');
   const [expanded, setExpanded] = useState(false);
@@ -53,10 +54,10 @@ const Navbar = () => {
     }
   };
 
-  const totalItemsInCart = cart.reduce((total, item) => total + item.qty, 0);
-  console.log(current);
+  const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
+  console.log("totalItemsInCart",totalItemsInCart);
   
-  // const totalItemsInWishlist = wishlist.length; // Count items in wishlist
+  const totalItemsInWishlist = wish.length; 
 
   return (
     <nav className="navbar flex justify-around items-center bg-white w-full z-[1000] h-20 shadow-[0_2px_4px_rgba(0,0,0,0.1)] fixed pt-2.5 left-0 top-0">
@@ -69,7 +70,7 @@ const Navbar = () => {
         />
       </div>
 
-      <ul className="navbar-menu flex gap-10 m-0 p-0 list-none">
+      <ul className="navbar-menu flex gap-8 m-0 p-0 list-none">
         <li>
           <Link
             to="/shop"
@@ -104,9 +105,9 @@ const Navbar = () => {
         </li>
       </ul>
 
-      <div className="navbar-actions flex items-center gap-10">
+      <div className="navbar-actions flex items-center gap-5">
         {/* Search Bar */}
-        <div className="search-container flex items-center space-x-2 mt-[2px] mb-[5px]">
+        <div className="search-container flex items-center space-x-2 mt-[2px] mb-[5px] mr-10 ">
           <input
             type="text"
             placeholder="Search..."
@@ -117,39 +118,30 @@ const Navbar = () => {
           />
           <button
             onClick={handleSearch}
-            className="rounded bg-[#555] text-white cursor-pointer mt-0.5 px-4 py-2 border-none hover:bg-[#777]"
+            className="ounded bg-[#555] text-white cursor-pointer mt-0.5 px-4 py-2 border-none hover:bg-[#777]"
           >
             Search
           </button>
         </div>
 
         {/* Profile Section */}
-        <div className="profile-container relative">
+        <div className="profile-container bg-transparent relative">
           {/* Conditionally render profile and icons based on user login */}
           {current ? (
             <>
-              {/* Profile with user name */}
-              <div className="profile-info">
-                <img
-                  src={profile}
-                  alt="User profile"
-                  onClick={handleProfile}
-                  className="h-[40px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110"
-                />
-                <span className="text-[11.5px]">{current.name}</span>
-              </div>
+              
 
               {/* Wishlist Icon */}
               <div className="wishlist-icon relative">
                 <img
                   src={wishblack}
                   alt="Wishlist"
-                  onClick={() => navigate('/wishlist')}
-                  className="h-[40px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110"
+                  onClick={() => navigate(`/wishlistpage`)}
+                  className="h-[35px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 mr-4"
                 />
-                {totalItemsInCart > 0 && (
-                  <span className="wishlist-count absolute bg-red-500 text-white text-[10px] px-1.5 py-[3px] rounded-full right-[85px] top-[15px]">
-                    {totalItemsInCart}
+                {totalItemsInWishlist > 0 && (
+                  <span className="wishlist-count absolute bg-red-500 text-white text-[10px]  px-[5px] py-[1px] rounded-full right-[10px] top-[-10px]">
+                    {totalItemsInWishlist}
                   </span>
                 )}
               </div>
@@ -160,13 +152,31 @@ const Navbar = () => {
                   src={cartimg}
                   alt="Cart"
                   onClick={() => navigate('/cartpage')}
-                  className="h-[40px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110"
+                  className="h-[35px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 mb-1 mr-4"
                 />
                 {totalItemsInCart > 0 && (
-                  <span className="cart-count absolute bg-red-500 text-white text-[10px] px-1.5 py-[3px] rounded-full right-[115px] top-[15px]">
+                  <span className="cart-count absolute bg-red-500 text-white text-[10px] px-[5px] py-[1px] rounded-full right-[10px] top-[-8px]">
                     {totalItemsInCart}
                   </span>
                 )}
+              </div>
+              {/* Profile with user name */}
+              <div className="profile-info">
+                <img
+                  src={profile}
+                  alt="User profile"
+                  onClick={handleProfile}
+                  className="h-[35px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 mr-4 mt-3 "/>
+                <span className="text-[11.5px] ml-3 mt-2">{current.name}</span>
+              </div>
+              {/* order Icon */}
+              <div className="cart-icon relative">
+                <img
+                  src={order}
+                  alt="order"
+                  onClick={() => navigate('/order')}
+                  className="h-[35px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 mb-1"
+                />
               </div>
             </>
           ) : (

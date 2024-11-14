@@ -24,6 +24,8 @@ import Products from './Component/Admin/Products/Products';
 import Update from './Component/Admin/Products/Update'
 import Add from './Component/Admin/Products/Add';
 import Pets from './Component/User/Body/Pets';
+import Wishlist from './Component/User/Navbar/Wishlist/Wishlist';
+import Order from './Component/User/Navbar/Order/Order';
 
 
 function App() {
@@ -47,6 +49,8 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/productdetails/:_id" element={<ProductDisplay />} />
             <Route path="/cartpage" element={<CartPage />} />
+            <Route path="/wishlistpage" element={<Wishlist />} />
+            <Route path="/order" element={<Order />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/support" element={<Support />} />
             <Route path="/collection-delivery" element={<Collection />} />

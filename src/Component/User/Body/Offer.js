@@ -3,9 +3,11 @@ import { DataContext } from '../Context/DataContext';
 import './Offer.css';
 import { useNavigate } from 'react-router-dom';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa'; 
+import { MyCartContext } from '../Context/CartContext';
 
 function Offer() {
   const context = useContext(DataContext);
+  const{addToWishlist}=useContext(MyCartContext)
   const navigate = useNavigate();
   
   if (!context) {
@@ -33,8 +35,8 @@ function Offer() {
           <div key={product._id} className="product-card">
             <div className="offer-tag">Offer</div>
             <div className="icon-container">
-              <i className="wishlist-icon"><FaHeart className="icon wishlist-icon" title="Add to Wishlist" /></i> {/* Replace with actual wishlist icon */}
-              <i className="cart-icon"><FaShoppingCart className="icon cart-icon" title="Add to Cart" /></i> {/* Replace with actual cart icon */}
+              <i className="wishlist-icon"><FaHeart className="icon wishlist-icon" title="Add to Wishlist" onClick={()=>addToWishlist(product._id)} /></i> {/* Replace with actual wishlist icon */}
+              <i className="cart-icon"><FaShoppingCart className="icon cart-icon" title="Add to Cart"/></i> {/* Replace with actual cart icon */}
             </div>
             <img 
               src={product.image} 
@@ -42,7 +44,7 @@ function Offer() {
             />
             <p>{product.productName}</p>
             <p className="price">{"$" + product.actualPrice}</p>
-            <button onClick={() => navigate(`/productdetails/${product.id}`)}>View Details</button>
+            <button onClick={() => navigate(`/productdetails/${product._id}`)}>View Details</button>
           </div>
         ))}
       </div>

@@ -1,13 +1,16 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosInstance from '../../../AxiosIntance';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie'
-export const DataContext = createContext();
 
+export const DataContext = createContext();
 export function FetchData({ children }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [datas, setDatas] = useState({email: '',password: ''});
 
+  //product fetching
   useEffect(() => {
     console.log('Fetching data from http://localhost:4000/products'); // Debugging
     fetch('http://localhost:4000/products')
@@ -27,10 +30,7 @@ export function FetchData({ children }) {
       });
   }, []);
 
-  const [datas, setDatas] = useState({
-    email: '',
-    password: ''
-  });
+  
   // const storedcurrent = localStorage.getItem("current");
   // const [current, setCurrent] = useState(storedcurrent ? JSON.parse(storedcurrent) : null);
 
@@ -49,17 +49,17 @@ export function FetchData({ children }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/login', {
+      const response = await axiosInstance.post('/login', {
         email: datas.email, 
         password: datas.password
-      },{withCredentials:true});
+      });
 
       // Cookies.set('user',JSON.stringify(response.data.user))
       // console.log(response.data.user)
       // Cookies.set('token',JSON.stringify(response.data.userToken))
       // console.log(response.data.userToken)
       console.log('Login successful');
-
+      setDatas({ email: '', password: '' });
       navigate('/');
      
       // const user = users.find((user) => user.email === datas.email && user.password === datas.password && !user.admin);
@@ -94,11 +94,10 @@ export function FetchData({ children }) {
 
     }
   };
-  const [current, setCurrent] = useState();
   useEffect(() => {
     // Retrieve the cookie value
     const userCookie = Cookies.get("user");
-    console.log("Cookie value:", userCookie);
+    // console.log("Cookie value:", userCookie);
   
     if (userCookie) {
       // Check if the cookie starts with 'j:' and remove it
@@ -106,16 +105,19 @@ export function FetchData({ children }) {
   
       try {
         const user = JSON.parse(userJson);
-        console.log("Parsed User Object:", user);
-        console.log("Username:", user.email);
+        // console.log("Parsed User Object:", user);
+        // console.log("Username:", user.email);
         setCurrent(user)
       } catch (error) {
-        console.error("Failed to parse user cookie:", error);
+        // console.error("Failed to parse user cookie:", error);
       }
     } else {
       console.log("User cookie not found");
     }
   },[datas]);
+  
+  const [current, setCurrent] = useState();
+ 
  
   const handleCreateAccount = () => {
     navigate('/signup');
