@@ -28,8 +28,7 @@ function OrderAddress() {
     const response=await axiosInstance.delete('/clearcart')
       setCurrent(response.data.cart)
       alert('Payment successful!');
-      navigate('/cartpage'); 
-    
+      navigate('/payment')
     
     
     }, 2000);

@@ -148,11 +148,12 @@ function Cartcontext({ children }) {
     setAddress(response.data.newAddress.products)    
     const responses=await axiosInstance.post('/createorder')
     setClientSecret(responses.data.data.clientsecret)
+    navigate('/payment')
     
       } 
 
   return (
-    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,setClientSecret }}>
+    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,clientSecret }}>
       {children}
     </MyCartContext.Provider>
   );

@@ -26,7 +26,7 @@ import Add from './Component/Admin/Products/Add';
 import Pets from './Component/User/Body/Pets';
 import Wishlist from './Component/User/Navbar/Wishlist/Wishlist';
 import Order from './Component/User/Navbar/Order/Order';
-
+import Payment from './Component/User/Payment/Payment';
 
 function App() {
   const { admin } = useContext(DataContext);
@@ -52,6 +52,7 @@ function App() {
             <Route path="/wishlistpage" element={<Wishlist />} />
             <Route path="/order" element={<Order />} />
             <Route path="/orderaddress" element={<OrderAddress />} />
+            <Route path="/payment" element={<Payment />} />
             <Route path="/support" element={<Support />} />
             <Route path="/collection-delivery" element={<Collection />} />
             </Routes>
