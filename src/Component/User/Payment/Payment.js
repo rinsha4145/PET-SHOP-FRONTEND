@@ -6,7 +6,6 @@ import { MyCartContext } from '../Context/CartContext';
 
 const stripePromise = loadStripe('pk_test_51QKzMGJjGSQ3GfldznCwn0EbnxRGKAXlYpdQDqm1s4HnOqxcw43Xtjb7xN85QkeIgAwpHnDEsBdld53eM5zrTYTJ00neyv4X3K');
 function Payment() {
-
   const { clientSecret } = useContext(MyCartContext)
   const option = { clientSecret }
 
