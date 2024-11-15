@@ -35,7 +35,6 @@ export function FetchData({ children }) {
   const [admin, setAdmin] = useState(storedadmin ? JSON.parse(storedadmin) : null);
 
 
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {

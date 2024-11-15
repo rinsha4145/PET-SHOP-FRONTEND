@@ -14,7 +14,7 @@ import Collection from './Component/User/Navbar/Support/collection-delivery'
 import Support from './Component/User/Navbar/Support/Support'
 import Profile from './Component/User/Navbar/Profile/Profile';
 import CartPage from './Component/User/Navbar/Cart/CartPage'
-import Payment from './Component/User/Payment/Payment';
+import OrderAddress from './Component/User/OrderAdress/OrderAddress';
 import AdminPage from './Component/Admin/AdminPage';
 import NavbarAdmin from './Component/Admin/NavbarAdmin';
 import { DataContext } from './Component/User/Context/DataContext'
@@ -51,7 +51,7 @@ function App() {
             <Route path="/cartpage" element={<CartPage />} />
             <Route path="/wishlistpage" element={<Wishlist />} />
             <Route path="/order" element={<Order />} />
-            <Route path="/payment" element={<Payment />} />
+            <Route path="/orderaddress" element={<OrderAddress />} />
             <Route path="/support" element={<Support />} />
             <Route path="/collection-delivery" element={<Collection />} />
             </Routes>

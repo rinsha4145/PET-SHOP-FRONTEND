@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 function Cart() {
   
   const { cart ,  incrementQuantity, decrementQuantity, handlecheckout ,handleremove} =useContext(MyCartContext);
-  console.log("cart--------",cart)
  
   const calculateSubtotal = (price, qty) => {
     const validPrice = parseFloat(price);
