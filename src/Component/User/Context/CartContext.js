@@ -20,6 +20,7 @@ function Cartcontext({ children }) {
     buildingName: '',roadAreaColony: '',landmark:''});
   const [address,setAddress]=useState()
   const [order,setOrder]=useState()
+  const [clientSecret,setClientSecret]=useState()
 
   //fetch cart 
   useEffect(() => {
@@ -146,11 +147,12 @@ function Cartcontext({ children }) {
     const response = await axiosInstance.post(`/createaddress`,formData)
     setAddress(response.data.newAddress.products)    
     const responses=await axiosInstance.post('/createorder')
+    setClientSecret(responses.data.data.clientsecret)
     
       } 
 
   return (
-    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary }}>
+    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,setClientSecret }}>
       {children}
     </MyCartContext.Provider>
   );
