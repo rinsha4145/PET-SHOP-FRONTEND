@@ -20,6 +20,16 @@ function Order() {
     fetchorders()
   },[])
 
+//   const handleClick = (e) => {
+//     e.preventDefault();
+//     try{
+//         const response =  axiosInstance.post(`/vieworder`)
+//     }catch (error) {
+//         console.error(error);
+
+//   };
+
+
   // const handleViewDetails = (productId) => {
   //   navigate(/orderdetailes/${productId})
   //   console.log("View details for product:", productId);
@@ -59,6 +69,7 @@ function Order() {
                                             <p className="text-gray-600">Brand: {product.productId.brand}</p>
                                         </div>
                                     </div>
+                                    
                                     {/* View Details Button with Right Arrow Icon */}
                                     {/* <button 
                                         onClick={() => handleViewDetails(product.productId._id)} 
@@ -70,6 +81,7 @@ function Order() {
                                 </div>
                             ))}
                         </div>
+                        {/* <button onClick={handleClick}>cancel order</button> */}
                         <p className="text-right mt-6 text-gray-700 font-medium">
                             Total Amount: ${order.amount}
                         </p>
