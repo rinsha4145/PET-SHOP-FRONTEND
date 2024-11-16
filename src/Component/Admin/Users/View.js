@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../../AxiosIntance';
 import { useParams } from 'react-router-dom';
 import './View.css'; 
 
@@ -7,14 +7,18 @@ const View = () => {
   const { id } = useParams(); 
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    // Fetch user details by ID
-    axios.get(`http://localhost:3000/Users/${id}`)
-      .then(response => setUser(response.data))
-      .catch(error => setError(error.message));
-  }, [id]);
-
+  useEffect(()=>{
+    const fetchusersbyid=  async() => {
+    try{
+      const response = await axiosInstance.get(`/admin/viewuserbyid/${id}`)
+      setUser(response.data.userbyid)
+    }catch (error) {
+      console.error("Error fetching cart items:", error);
+  }
+  }
+  fetchusersbyid()
+  },[id])
+  
   if (error) return <p>Error: {error}</p>;
   if (!user) return <p>Loading...</p>;
 

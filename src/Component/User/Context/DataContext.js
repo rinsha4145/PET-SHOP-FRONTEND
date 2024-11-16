@@ -31,8 +31,6 @@ export function FetchData({ children }) {
   }, []);
 
 
-  const storedadmin = localStorage.getItem("admin");
-  const [admin, setAdmin] = useState(storedadmin ? JSON.parse(storedadmin) : null);
 
 
   const navigate = useNavigate();
@@ -44,6 +42,7 @@ export function FetchData({ children }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
       const response = await axiosInstance.post('/login', {
         email: datas.email, 
@@ -51,7 +50,7 @@ export function FetchData({ children }) {
       });
       console.log('Login successful');
       setDatas({ email: '', password: '' });
-      navigate('/');
+      current ? navigate('/') : navigate('/admin')
     } catch (error) {
       // console.log("", error);
      console.log('Error occurred during login:',error.response  );
@@ -63,9 +62,11 @@ export function FetchData({ children }) {
   useEffect(() => {
     // Retrieve the cookie value
     const userCookie = Cookies.get("user");
-    // console.log("Cookie value:", userCookie);
+    const adminCookie = Cookies.get("admin");
+
+    console.log("Cookie value:", adminCookie);
   
-    if (userCookie) {
+    if (userCookie ) {
       // Check if the cookie starts with 'j:' and remove it
       const userJson = userCookie.startsWith("j:") ? userCookie.slice(2) : userCookie;
   
@@ -77,12 +78,24 @@ export function FetchData({ children }) {
       } catch (error) {
         // console.error("Failed to parse user cookie:", error);
       }
+    }else if(adminCookie){
+      const adminJson = adminCookie.startsWith("j:") ? adminCookie.slice(2) : adminCookie;
+      try {
+        const admin = JSON.parse(adminJson);
+        // console.log("Parsed User Object:", user);
+        // console.log("Username:", user.email);
+        setAdmin(admin)
+      } catch (error) {
+        // console.error("Failed to parse user cookie:", error);
+      }
     } else {
       console.log("User cookie not found");
     }
   },[datas]);
   
   const [current, setCurrent] = useState();
+  const [admin, setAdmin] = useState();
+
  
  
   const handleCreateAccount = () => {

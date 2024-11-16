@@ -24,7 +24,6 @@ function OrderAddress() {
     setTimeout(async () => {
       const response = await axiosInstance.delete("/clearcart");
       setCurrent(response.data.cart);
-      alert("Payment successful!");
       navigate("/payment");
     }, 2000);
   };
@@ -47,7 +46,7 @@ function OrderAddress() {
   // }, 100);
 
   return (
-    <div className="payment-container">
+     <div className="payment-container">
       <div className="form-group">
         <h2>Payment Page</h2>
         <form onSubmit={handleSubmit} className="payment-form">
@@ -79,6 +78,13 @@ function OrderAddress() {
               placeholder="Alternate Phone Number"
             />
           </div>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Enter your email"
+          />
 
           <div className="row">
             <input
@@ -102,13 +108,21 @@ function OrderAddress() {
               name="state"
               value={formData.state}
               onChange={handleChange}
+              placeholder="country*"
+              required
+            />
+             <input
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
               placeholder="State*"
               required
             />
           </div>
 
           <div>
-            <textarea
+            <input
               name="buildingName"
               value={formData.buildingName}
               onChange={handleChange}

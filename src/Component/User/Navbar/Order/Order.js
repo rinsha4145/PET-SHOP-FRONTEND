@@ -1,9 +1,12 @@
-import React,{useState,useEffect} from 'react'
-import { useNavigate } from 'react-router-dom';
+import React,{useState,useEffect, useContext} from 'react'
+import { useNavigate,useParams } from 'react-router-dom';
 import axiosInstance from '../../../../AxiosIntance';
+import { MyCartContext } from "../../Context/CartContext";
 
 function Order() {
   const [orders,setorder]=useState([])
+  const {handleCancel}=useContext(MyCartContext)
+  
   const navigate=useNavigate()
 
   useEffect(()=>{
@@ -20,15 +23,33 @@ function Order() {
     fetchorders()
   },[])
 
+  const {sessionid}= useParams()
+  useEffect(()=>{
+    if(sessionid){
+        verify()
+      }
+  },[])
+  const verify= async()=>{
+  try {
+    const respons=await axiosInstance.post("/verifyorder",{sessionId:sessionid})
+    console.log("verifired",respons);
+  } catch (error) {
+    console.log("adfadsd",error);
+    
+  }
+    
+  }
+
 //   const handleClick = (e) => {
 //     e.preventDefault();
 //     try{
 //         const response =  axiosInstance.post(`/vieworder`)
 //     }catch (error) {
 //         console.error(error);
+//     }
 
 //   };
-
+ 
 
   // const handleViewDetails = (productId) => {
   //   navigate(/orderdetailes/${productId})
@@ -67,7 +88,11 @@ function Order() {
                                             <p className="text-gray-600">Price: ${product.productId.price}</p>
                                             <p className="text-gray-600">Quantity: {product.quantity}</p>
                                             <p className="text-gray-600">Brand: {product.productId.brand}</p>
+                                            <p className="text-gray-600">paymentStatus:{order.paymentStatus}</p>
+                                            <p className="text-gray-600">shippingStatus:{order.shippingStatus}</p>
                                         </div>
+                                       
+
                                     </div>
                                     
                                     {/* View Details Button with Right Arrow Icon */}
@@ -81,7 +106,7 @@ function Order() {
                                 </div>
                             ))}
                         </div>
-                        {/* <button onClick={handleClick}>cancel order</button> */}
+                        <button onClick={()=>handleCancel(order.sessionID)}>cancel order</button>
                         <p className="text-right mt-6 text-gray-700 font-medium">
                             Total Amount: ${order.amount}
                         </p>

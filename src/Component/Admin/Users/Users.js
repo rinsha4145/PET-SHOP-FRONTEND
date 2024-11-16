@@ -2,30 +2,29 @@ import React, { useState, useEffect } from 'react';
 import './Users.css'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../../AxiosIntance';
 
 function Users() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState();
   const [error, setError] = useState(null);
 const navigate=useNavigate();
-  useEffect(() => {
-    fetch('http://localhost:3000/Users')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-       
-        const nonAdminUsers = data.filter(user => user.admin === false);
-        setData(nonAdminUsers);
-      })
-      .catch(error => setError(error.message));
-  }, []);
 
+useEffect(()=>{
+  const fetchusers=  async() => {
+  try{
+    const response = await axiosInstance.get(`admin/viewusers`)
+    const nonAdminUsers = response.data.users
+    setData(nonAdminUsers);
+  }catch (error) {
+    console.error("Error fetching cart items:", error);
+}
+}
+fetchusers()
+},[])
+  
   const handleBlock = (id) => {
     if (window.confirm(`Are you sure you want to block user with ID ${id}?`)) {
-      axios.patch(`http://localhost:3000/Users/${id}`, { blocked: true })
+      axi.patch(`http://localhost:3000/Users/${id}`, { blocked: true })
         .then(() => {
           alert(`User with ID ${id} has been blocked`);
        
@@ -75,11 +74,11 @@ const navigate=useNavigate();
         </thead>
         <tbody>
           {data.map(user => (
-            <tr key={user.id}>
+            <tr key={user._id}>
               <td>{user.id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td><button onClick={()=>navigate(`/view/${user.id}`)}>View</button></td>
+              <td><button onClick={()=>navigate(`/view/${user._id}`)}>View</button></td>
               <td>
               {user.blocked === false ? (
                   <button className="block-btn" onClick={() => handleBlock(user.id)}>

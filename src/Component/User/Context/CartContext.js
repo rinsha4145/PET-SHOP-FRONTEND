@@ -15,11 +15,11 @@ function Cartcontext({ children }) {
   const [wish, setWish] = useState([]);
   const [formData, setFormData] = useState({
     fullName: '',phoneNumber: '',
-    alternatePhoneNumber: '',pincode: '',
-    state: '',city: '',
+    alternatePhoneNumber: '',email:'',pincode: '',
+    state: '',city: '',country:'',
     buildingName: '',roadAreaColony: '',landmark:''});
   const [address,setAddress]=useState()
-  const [order,setOrder]=useState()
+
   const [clientSecret,setClientSecret]=useState()
 
   //fetch cart 
@@ -53,6 +53,8 @@ function Cartcontext({ children }) {
     };
     fetchWish();
   }, [current]);
+
+  
 
 //loading process
   if (loading) {
@@ -145,15 +147,25 @@ function Cartcontext({ children }) {
 //posting the orderAddress and orders to the orderpage
   const handledelivary= async()=>{
     const response = await axiosInstance.post(`/createaddress`,formData)
+    console.log(response)
     setAddress(response.data.newAddress.products)    
     const responses=await axiosInstance.post('/createorder')
+    console.log(responses)
+
     setClientSecret(responses.data.data.clientsecret)
     navigate('/payment')
     
   } 
 
+  //cancel a order
+  const handleCancel = async (id) => {
+    const response = await axiosInstance.post(`/ordercancel/${id}`)
+    console.log("first",response)
+
+  };
+
   return (
-    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,clientSecret }}>
+    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,clientSecret,handleCancel }}>
       {children}
     </MyCartContext.Provider>
   );

@@ -4,16 +4,22 @@ import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { useContext } from 'react';
 import { DataContext } from '../User/Context/DataContext';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../AxiosIntance';
 
 const NavbarAdmin = () => {
     const {setAdmin}=useContext(DataContext)
     const navigate = useNavigate();
-  const handleAdminLogout = () => {
-        localStorage.removeItem('admin');
-setAdmin(null)
-        alert("you logged out")
-        navigate('/login');
-        
+  const handleAdminLogout = async (e) => {
+      e.preventDefault();
+      try {
+       const response= await axiosInstance.post('/admin/adminlogout');
+        setAdmin(null)
+        alert('Logout successful');
+        navigate("/")
+      } catch (error) {
+        console.error('Error occurred during logout:', error.response);
+        alert(error.response?.data?.message || 'Logout failed');
+      }   
   };
 
   return (

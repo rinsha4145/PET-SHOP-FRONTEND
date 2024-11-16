@@ -27,6 +27,7 @@ import Pets from './Component/User/Body/Pets';
 import Wishlist from './Component/User/Navbar/Wishlist/Wishlist';
 import Order from './Component/User/Navbar/Order/Order';
 import Payment from './Component/User/Payment/Payment';
+import OrderVerify from './Component/User/Navbar/Order/OrderVerify';
 
 function App() {
   const { admin } = useContext(DataContext);
@@ -52,11 +53,12 @@ function App() {
             <Route path="/wishlistpage" element={<Wishlist />} />
             <Route path="/order" element={<Order />} />
             <Route path="/orderaddress" element={<OrderAddress />} />
+            {/* <Route path="/verifyorder" element={<OrderVerify />} /> */}
             <Route path="/payment" element={<Payment />} />
             <Route path="/support" element={<Support />} />
             <Route path="/collection-delivery" element={<Collection />} />
             </Routes>
-            <br /><Footer />
+            {/* <br /><Footer /> */}
 
           </>
         ) : (
@@ -64,7 +66,8 @@ function App() {
            <NavbarAdmin />
             <Routes>         
             #
-            
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/users" element={<Users />} />
             <Route path="/view/:id" element={<View />} />

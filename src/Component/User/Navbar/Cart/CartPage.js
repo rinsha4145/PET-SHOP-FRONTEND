@@ -53,15 +53,15 @@ function Cart() {
         <div className="flex-1 bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-3">Shopping Cart</h2>
           {cart.length === 0 ? (
-           <main class="grid place-items-center  px-5 py-20 sm:py-30 lg:px-8">
-           <div class="text-center">
+           <main className="grid place-items-center  px-5 py-20 sm:py-30 lg:px-8">
+           <div className="text-center">
              
-             <h1 class="mt-4 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Your cart is empty.</h1>
-             <p class="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Oops!!! you don't have anything in your cart.</p>
-             <p class="text-base font-semibold text-indigo-600">let's add something</p>
-             <div class="mt-10 flex flex-row items-center justify-center gap-x-6">
-             <Link to='/' class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">back to home</Link>
-               <Link to='/shop' class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">shop it</Link>
+             <h1 className="mt-4 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Your cart is empty.</h1>
+             <p className="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Oops!!! you don't have anything in your cart.</p>
+             <p className="text-base font-semibold text-indigo-600">let's add something</p>
+             <div className="mt-10 flex flex-row items-center justify-center gap-x-6">
+             <Link to='/' className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">back to home</Link>
+               <Link to='/shop' className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">shop it</Link>
              </div>
            </div>
          </main>
