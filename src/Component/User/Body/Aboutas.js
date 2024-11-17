@@ -1,5 +1,5 @@
 import React from 'react';
-import petImage from '../../../Assets/about (3).png'; // replace with the actual path to your image
+import petImage from '../../../Assets/about.jpg'
 
 const AboutUs = () => {
   return (
@@ -8,15 +8,15 @@ const AboutUs = () => {
         <div className="w-full justify-start items-center xl:gap-12 gap-10 grid lg:grid-cols-2 grid-cols-1">
             <div className="w-full flex-col justify-center lg:items-start items-center gap-2 inline-flex">
                 <div className="w-full flex-col justify-center items-start gap-0 flex">
-                    <div className="flex-col justify-start lg:items-start items-center  flex">
-                        <h6 className="text-gray-400 text-base font-normal leading-relaxed">About Us</h6>
-                        <div className="w-full flex-col justify-start lg:items-start items-center gap-2 flex">
+                    <div className="flex-col justify-start lg:items-start items-center flex">
+                        
+                        <div className="w-full flex-col justify-start lg:items-start items-center mt-[-60px] gap-2 flex">
                             <h2
-                                className="text-indigo-700 text-4xl font-bold font-manrope leading-normal lg:text-start text-center">
-                                The Tale of Our Achievement Story</h2>
+                                className="text-orange text-4xl font-bold font-manrope leading-normal lg:text-start text-center">
+                                About Us</h2>
                             <p
                                 className="text-gray-500 text-base font-normal leading-relaxed lg:text-start text-center">
-                                Welcome to <span className="font-semibold">Paw shop</span> — a place where pet lovers, like you,
+                                &nbsp;&nbsp;Welcome to <span className="font-semibold">Paw shop</span> — a place where pet lovers, like you,
       can find everything they need to keep their furry, feathered, and scaly friends happy and healthy.
       We believe that pets are family, and our mission is to provide the best quality products, services,
       and guidance to ensure they live their best lives.<br/>
@@ -27,7 +27,7 @@ const AboutUs = () => {
         </p>
                         </div>
                     </div>
-                    <div className="w-full flex-col justify-center items-start gap-6 flex">
+                    <div className="w-full flex-col justify-center items-start gap-6 flex"><br/>
                         <div className="w-full justify-start items-center gap-8 grid md:grid-cols-2 grid-cols-1">
                             <div
                                 className="w-full h-full p-3.5 rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">

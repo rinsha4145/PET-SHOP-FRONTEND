@@ -23,7 +23,7 @@ function Testimonial() {
   }, [instanceRef]);
 
   return (
-    <section className="bg-gray-50">
+    <section className="bg-gray-50 mr-[120px]">
       <div className="mx-auto max-w-[1340px] px-4 py-12 sm:px-6 lg:me-0 lg:py-16 lg:pe-0 lg:ps-8 xl:py-24">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-center lg:gap-16">
           <div className="max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
@@ -40,7 +40,7 @@ function Testimonial() {
               <button
                 aria-label="Previous slide"
                 id="keen-slider-previous-desktop"
-                className="rounded-full border border-rose-600 p-3 text-rose-600 transition hover:bg-rose-600 hover:text-white"
+                className="rounded-full border border-rose-600 p-3 text-orange transition hover:bg-orange hover:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@ function Testimonial() {
               <button
                 aria-label="Next slide"
                 id="keen-slider-next-desktop"
-                className="rounded-full border border-rose-600 p-3 text-rose-600 transition hover:bg-rose-600 hover:text-white"
+                className="rounded-full border border-rose-600 p-3 text-orange transition hover:bg-orange hover:text-white"
               >
                 <svg
                   className="size-5 rtl:rotate-180"
@@ -81,7 +81,7 @@ function Testimonial() {
                       {/* Your star SVGs here */}
                     </div>
                     <div className="mt-4">
-                      <p className="text-2xl font-bold text-rose-600 sm:text-3xl">Stayin' Alive</p>
+                      <p className="text-2xl font-bold text-orange sm:text-3xl">Stayin' Alive</p>
                       <p className="mt-4 leading-relaxed text-gray-700">
                         No, Rose, they are not breathing. And they have no arms or legs … Where are
                         they? You know what? If we come across somebody with no arms or legs, do we
@@ -102,7 +102,7 @@ function Testimonial() {
                       {/* Your star SVGs here */}
                     </div>
                     <div className="mt-4">
-                      <p className="text-2xl font-bold text-rose-600 sm:text-3xl">Another Testimonial</p>
+                      <p className="text-2xl font-bold text-orange sm:text-3xl">Another Testimonial</p>
                       <p className="mt-4 leading-relaxed text-gray-700">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non dolor et
                         sapien facilisis scelerisque.

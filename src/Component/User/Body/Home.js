@@ -9,8 +9,8 @@ function Home() {
   return (
     <div>
          <Header/>
-         <AboutUs/>
          <Pets/>
+         <AboutUs/>
          <Offer/>
          <Testimonial/>
     </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState,useEffect,useRef } from 'react';
 import logo from '../../../Assets/logo.png';
 import cartimg from '../../../Assets/cart.png';
 import userIcon from '../../../Assets/user.png';
@@ -9,25 +9,62 @@ import order from '../../../Assets/order.png'
 import { useNavigate, Link } from 'react-router-dom';
 import { DataContext } from '../Context/DataContext'; 
 import { MyCartContext } from '../Context/CartContext';
+import {
+  User,
+  ShoppingBag,
+  Heart,
+  ClipboardList,
+  Settings,
+  HelpCircle,
+  FileText,
+  LogOut
+} from 'lucide-react';
+import axiosInstance from '../../../AxiosIntance';
 
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { current, data } = useContext(DataContext); 
-  
+  const { current, data,setCurrent } = useContext(DataContext); 
   
   const { cart,wish } = useContext(MyCartContext); 
   // const { wishlist } = useContext(WishlistContext); // Use WishlistContext
   const [searchQuery, setSearchQuery] = useState('');
   const [expanded, setExpanded] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleProfile = () => {
     if (current) {
-      navigate('/profile'); 
+      setIsDropdownOpen(!isDropdownOpen);
     } else {
       navigate('/login'); 
     }
   };
-
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await axiosInstance.post('/logout',{},{withCredentials:true});
+      setCurrent(null)
+      alert('Logout successful');
+      navigate("/")
+    } catch (error) {
+      console.error('Error occurred during logout:', error.response);
+      alert(error.response?.data?.message || 'Logout failed');
+    setIsDropdownOpen(false);
+    navigate('/login');
+    }
+  };
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -125,70 +162,115 @@ const Navbar = () => {
         </div>
 
         {/* Profile Section */}
-        <div className="profile-container bg-transparent relative">
-          {/* Conditionally render profile and icons based on user login */}
-          {current ? (
-            <>
-              
+        <div className="flex items-center space-x-6">
+            {current && (
+              <>
+                {/* Wishlist */}
+                <div className="relative">
+                  <button 
+                    onClick={() => navigate('/wishlistpage')}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+                  >
+                    <Heart className="h-6 w-6 text-gray-700" />
+                    {totalItemsInWishlist > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                        {totalItemsInWishlist}
+                      </span>
+                    )}
+                  </button>
+                </div>
 
-              {/* Wishlist Icon */}
-              <div className="wishlist-icon relative">
-                <img
-                  src={wishblack}
-                  alt="Wishlist"
-                  onClick={() => navigate(`/wishlistpage`)}
-                  className="h-[35px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 mr-4"
-                />
-                {totalItemsInWishlist > 0 && (
-                  <span className="wishlist-count absolute bg-red-500 text-white text-[10px]  px-[5px] py-[1px] rounded-full right-[10px] top-[-10px]">
-                    {totalItemsInWishlist}
-                  </span>
-                )}
-              </div>
+                {/* Cart */}
+                <div className="relative">
+                  <button 
+                    onClick={() => navigate('/cartpage')}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+                  >
+                    <ShoppingBag className="h-6 w-6 text-gray-700" />
+                    {totalItemsInCart > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                        {totalItemsInCart}
+                      </span>
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
 
-              {/* Cart Icon */}
-              <div className="cart-icon relative">
-                <img
-                  src={cartimg}
-                  alt="Cart"
-                  onClick={() => navigate('/cartpage')}
-                  className="h-[35px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 mb-1 mr-4"
-                />
-                {totalItemsInCart > 0 && (
-                  <span className="cart-count absolute bg-red-500 text-white text-[10px] px-[5px] py-[1px] rounded-full right-[10px] top-[-8px]">
-                    {totalItemsInCart}
-                  </span>
+            {/* Profile Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={handleProfile}
+                className="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+              >
+                <User className="h-6 w-6 text-gray-700" />
+                {current && (
+                  <span className="text-sm font-medium text-gray-700">{current.name}</span>
                 )}
-              </div>
-              {/* Profile with user name */}
-              <div className="profile-info">
-                <img
-                  src={profile}
-                  alt="User profile"
-                  onClick={handleProfile}
-                  className="h-[35px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 mr-4 mt-3 "/>
-                <span className="text-[11.5px] ml-3 mt-2">{current.name}</span>
-              </div>
-              {/* order Icon */}
-              <div className="cart-icon relative">
-                <img
-                  src={order}
-                  alt="order"
-                  onClick={() => navigate('/order')}
-                  className="h-[35px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110 mb-1"
-                />
-              </div>
-            </>
-          ) : (
-            // Show login icon if no user is logged in
-            <img
-              src={userIcon}
-              onClick={handleProfile}
-              alt="Login"
-              className="h-[40px] cursor-pointer transition-transform duration-[0.3s] ease-[ease] hover:scale-110"
-            />
-          )}
-        </div>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isDropdownOpen && current && (
+                <div className="absolute right-0 mt-2 w-56 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transform opacity-100 scale-100 transition-all duration-200">
+                  <div className="p-2">
+                    {/* User Info */}
+                    <div className="px-4 py-3">
+                      <p className="text-sm font-medium text-gray-900">{current.name}</p>
+                      <p className="text-sm text-gray-500">{current.email}</p>
+                    </div>
+                    
+                    <div className="border-t border-gray-100">
+                      <div className="py-1">
+                        <Link
+                          to="/profile"
+                          className="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                        >
+                          <Settings className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                          Profile
+                        </Link>
+                        
+                        <Link
+                          to="/order"
+                          className="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                        >
+                          <ClipboardList className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                          My Orders
+                        </Link>
+
+                        <Link
+                          to="/support"
+                          className="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                        >
+                          <HelpCircle className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                          Help & Support
+                        </Link>
+
+                        {/* <Link
+                          to="/terms"
+                          className="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                        >
+                          <FileText className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                          Terms & Policies
+                        </Link> */}
+                      </div>
+                    </div>
+
+                    <div className="border-t border-gray-100">
+                      <div className="py-1">
+                        <button
+                          onClick={handleLogout}
+                          className="group flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                        >
+                          <LogOut className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                          Sign out
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
       </div>
     </nav>
   );

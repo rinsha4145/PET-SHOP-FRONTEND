@@ -17,7 +17,7 @@ const Login = () => {
     <div className="flex min-h-screen w-screen items-center justify-center text-gray-600 bg-gray-50">
       <div className="relative">
         {/* Background SVG Patterns */}
-        <div className="hidden sm:block h-56 w-56 text-indigo-300 absolute a-z-10 -left-20 -top-20">
+        <div className="hidden sm:block h-56 w-56 text-orange absolute a-z-10 -left-20 -top-20">
           <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>
             <defs>
               <pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(0.6) rotate(0)'>
@@ -27,7 +27,7 @@ const Login = () => {
             <rect width='800%' height='800%' fill='url(#a)'/>
           </svg>
         </div>
-        <div className="hidden sm:block h-28 w-28 text-indigo-300 absolute a-z-10 -right-20 -bottom-20">
+        <div className="hidden sm:block h-28 w-28 text-orange absolute a-z-10 -right-20 -bottom-20">
           <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>
             <defs>
               <pattern id='b' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(0.5) rotate(0)'>
@@ -42,7 +42,7 @@ const Login = () => {
         <div className="relative flex flex-col sm:w-[30rem] rounded-lg bg-white shadow-lg px-4">
           <div className="flex-auto p-6">
             <div className="mb-10 flex items-center justify-center">
-              <span className="text-3xl font-black text-indigo-500">paw shop.</span>
+              <span className="text-3xl font-black text-orange">paw shop.</span>
             </div>
             <h4 className="mb-2 font-medium text-gray-700 text-xl">Welcome to paw shop!</h4>
             <p className="mb-6 text-gray-500">Please sign-in to access your account</p>
@@ -65,7 +65,7 @@ const Login = () => {
               <div className="mb-4">
                 <div className="flex justify-between">
                   <label className="mb-2 inline-block text-xs font-medium uppercase text-gray-700" htmlFor="password">Password</label>
-                  <Link to="/forgot-password" className="text-indigo-500 text-xs">Forgot Password?</Link>
+                  <Link to="/forgot-password" className="text-orange text-xs">Forgot Password?</Link>
                 </div>
                 <div className="relative flex items-center">
                   <input
@@ -89,7 +89,7 @@ const Login = () => {
 
               <div className="mb-4">
                 <input
-                  className="mr-2 h-5 w-5 rounded border border-gray-300 text-indigo-500 focus:border-indigo-500"
+                  className="mr-2 h-5 w-5 rounded border border-gray-300 text-orange focus:border-indigo-500"
                   type="checkbox"
                   id="remember-me"
                 />
@@ -97,7 +97,7 @@ const Login = () => {
               </div>
 
               <div className="mb-4">
-                <button className="w-full rounded-md border border-indigo-500 bg-indigo-500 py-2 text-sm text-white hover:bg-indigo-600 focus:bg-indigo-600">
+                <button className="w-full rounded-md border border-orange bg-orange py-2 text-sm text-white hover:bg-gray-600 focus:bg-gray-600">
                   Sign in
                 </button>
               </div>
@@ -105,7 +105,7 @@ const Login = () => {
 
             <p className="text-center">
               New on paw?{' '}
-              <Link to="/sign" className="text-indigo-500">Create an account</Link>
+              <Link to="/sign" className="text-orange">Create an account</Link>
             </p>
           </div>
         </div>
