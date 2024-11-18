@@ -66,9 +66,8 @@ function App() {
            <NavbarAdmin />
             <Routes>         
             #
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/admin" element={<AdminPage />} />
+           
+            <Route path="/" element={<AdminPage />} />
             <Route path="/users" element={<Users />} />
             <Route path="/view/:id" element={<View />} />
             <Route path="/products" element={< Products/>} />

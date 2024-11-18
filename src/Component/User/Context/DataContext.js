@@ -9,6 +9,11 @@ export function FetchData({ children }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [datas, setDatas] = useState({email: '',password: ''});
+  const [current, setCurrent] = useState();
+  const [admin, setAdmin] = useState();
+
+  const navigate = useNavigate();
+
 
   //product fetching
   useEffect(() => {
@@ -31,34 +36,6 @@ export function FetchData({ children }) {
   }, []);
 
 
-
-
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDatas({ ...datas, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      const response = await axiosInstance.post('/login', {
-        email: datas.email, 
-        password: datas.password
-      });
-      console.log('Login successful');
-      setDatas({ email: '', password: '' });
-      current ? navigate('/') : navigate('/admin')
-    } catch (error) {
-      // console.log("", error);
-     console.log('Error occurred during login:',error.response  );
-      
-      alert(error.response.data.message || 'Login failed');
-
-    }
-  };
   useEffect(() => {
     // Retrieve the cookie value
     const userCookie = Cookies.get("user");
@@ -92,9 +69,34 @@ export function FetchData({ children }) {
       console.log("User cookie not found");
     }
   },[datas]);
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDatas({ ...datas, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await axiosInstance.post('/login', {
+        email: datas.email, 
+        password: datas.password
+      });
+      console.log('Login successful');
+      setDatas({ email: '', password: '' });
+      navigate('/')
+    } catch (error) {
+      // console.log("", error);
+     console.log('Error occurred during login:',error.response  );
+      
+      alert(error.response.data.message || 'Login failed');
+
+    }
+  };
   
-  const [current, setCurrent] = useState();
-  const [admin, setAdmin] = useState();
+  
 
  
  

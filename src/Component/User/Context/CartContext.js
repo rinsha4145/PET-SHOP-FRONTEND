@@ -25,15 +25,17 @@ function Cartcontext({ children }) {
   //fetch cart 
   useEffect(() => {
     const fetchCart = async () => {
-      try {
-        const response = await axiosInstance.get(`/viewcart`);
-        const products = response.data.cart.products;
-        setCart(products);
-        setLoading(false);  
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-        setLoading(false);
-      }
+      if(current){
+        try {
+          const response = await axiosInstance.get(`/viewcart`);
+          const products = response.data.cart.products;
+          setCart(products);
+          setLoading(false);  
+        } catch (error) {
+          console.error("Error fetching cart items:", error);
+          setLoading(false);
+        }
+      }  
     };
     fetchCart();
   }, [current]);
@@ -41,16 +43,18 @@ function Cartcontext({ children }) {
   //fetch wish
   useEffect(() => {
     const fetchWish = async () => {
-      try {
-        const response = await axiosInstance.get(`/wishlist`);
-        const products = response.data.getwishlist.products;
-        setWish(products); 
-        setLoading(false);  
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-        setLoading(false);  
-      }
-    };
+      if(current){
+        try {
+          const response = await axiosInstance.get(`/wishlist`);
+          const products = response.data.getwishlist.products;
+          setWish(products); 
+          setLoading(false);  
+        } catch (error) {
+          console.error("Error fetching cart items:", error);
+          setLoading(false);  
+        }
+      };
+    }  
     fetchWish();
   }, [current]);
 
@@ -128,7 +132,7 @@ function Cartcontext({ children }) {
         }else if(response.data.wishlist){
           setWish(response.data.wishlist.products)
         }
-        alert(response.data.message)
+        // alert(response.data.message)
       }else{
         navigate('/login')
         alert("please login")

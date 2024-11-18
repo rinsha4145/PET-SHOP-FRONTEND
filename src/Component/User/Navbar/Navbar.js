@@ -225,7 +225,7 @@ const Navbar = () => {
                           to="/profile"
                           className="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
                         >
-                          <Settings className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                          <User className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
                           Profile
                         </Link>
                         
