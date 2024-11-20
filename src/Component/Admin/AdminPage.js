@@ -1,28 +1,106 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminPage.css'; // Import the CSS file
-import users from '../../Assets/users.png'
-import products from '../../Assets/product.png'
+import { FaUsers, FaBoxOpen, FaDollarSign, FaClipboardList } from 'react-icons/fa';
+import axiosInstance from '../../AxiosIntance';
+import { PieChart } from '@mui/x-charts/PieChart';
 
 function AdminPage() {
   const navigate = useNavigate();
+  const [revenew, setRevenew] = useState(0);
+  const [purchased, setPurchased] = useState(0);
+  const [users, setUsers] = useState(0);
+  const [products, setProducts] = useState(0);
+
+  // Prepare data for PieChart
+  const data = [
+    { label: 'Total Revenue', value: revenew },
+    { label: 'Total Products Sold', value: purchased },
+    { label: 'Total Users', value: users },
+    { label: 'Total Products', value: products },
+  ];
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.get(`admin/totalrevenew`);
+        setRevenew(response.data.revenew);
+
+        const responses = await axiosInstance.get(`admin/totalpurchased`);
+        setPurchased(responses.data.totalProductsPurchased);
+
+        const res = await axiosInstance.get(`admin/viewusers`);
+        setUsers(res.data.totalUsers);
+
+        const responsed = await axiosInstance.get(`admin/viewproducts`);
+        setProducts(responsed.data.totalProducts);
+        
+      } catch (error) {
+        console.error('Error', error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
-    <div className="card-container">
-      <div className="card">
-        <img src={users} alt="Users" />
-        <h3>Manage Users</h3>
-        <p>View and manage user accounts</p>
-        <button onClick={() => navigate('/users')}>VIEW USERS</button>
+    <>
+      <div className="flex ml-[190px] mt-10 gap-[100px]">
+        <div className="flex w-[250px] h-[150px] bg-blue-100 items-center p-6 bg-white shadow-md rounded-md">
+          <div className="bg-blue-100 p-3 rounded-full mr-4">
+            <FaClipboardList size={30} style={{ color: 'dodgerblue' }} />
+          </div>
+          <div>
+            <p className="text-xl font-medium text-gray-800">{purchased}</p>
+            <p className="text-sm text-gray-500">Total Products Sold</p>
+          </div>
+        </div>
+        <div className="flex w-[250px] bg-blue-100 items-center p-6 bg-white shadow-md rounded-md">
+          <div className="bg-blue-100 p-3 rounded-full mr-4">
+            <FaDollarSign size={29} style={{ color: 'dodgerblue' }} />
+          </div>
+          <div>
+            <p className="text-xl font-medium text-gray-800">₹{revenew}</p>
+            <p className="text-sm text-gray-500">Total Profit</p>
+          </div>
+        </div>
+        <div className="flex w-[250px] bg-blue-100 items-center p-6 bg-white shadow-md rounded-md">
+          <div className="bg-blue-100 p-3 rounded-full mr-4">
+            <FaBoxOpen size={30} style={{ color: 'dodgerblue' }} />
+          </div>
+          <div>
+            <p className="text-xl font-medium text-gray-800">{products}</p>
+            <p className="text-sm text-gray-500">Total Product</p>
+          </div>
+        </div>
+        <div className="flex w-[250px] bg-blue-100 items-center p-6 bg-white shadow-md rounded-md">
+          <div className="bg-blue-100 p-3 rounded-full mr-4">
+            <FaUsers size={30} style={{ color: 'dodgerblue' }} />
+          </div>
+          <div>
+            <p className="text-xl font-medium text-gray-800">{users}</p>
+            <p className="text-sm text-gray-500">Total Users</p>
+          </div>
+        </div>
       </div>
 
-      <div className="card">
-        <img src={products} alt="Products" />
-        <h3>Manage Products</h3>
-        <p>View and manage product listings</p>
-        <button onClick={() => navigate('/products')}>VIEW PRODUCTS</button>
+      <div className=" mt-10 ml-[200px] w-[500px] h-[400px]">
+        <PieChart
+          series={[
+            {
+              data: data, // Pass the data directly, not inside an array
+              innerRadius: 50,
+              outerRadius: 120,
+              paddingAngle: 5,
+              cornerRadius: 5,
+              startAngle: -45,
+              endAngle: 225,
+              cx: 150,
+              cy: 150,
+            },
+          ]}
+        />
       </div>
-    </div>
+    </>
   );
 }
 

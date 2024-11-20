@@ -28,6 +28,10 @@ import Wishlist from './Component/User/Navbar/Wishlist/Wishlist';
 import Order from './Component/User/Navbar/Order/Order';
 import Payment from './Component/User/Payment/Payment';
 import OrderVerify from './Component/User/Navbar/Order/OrderVerify';
+import Orders from './Component/Admin/Orders';
+import ViewProductsFromOrder from './Component/Admin/ViewProductsFromOrder';
+import EditShippingStatus from './Component/Admin/EditShippingStatus';
+import ViewProductDetails from './Component/Admin/Products/ViewProductDetails';
 
 function App() {
   const { admin } = useContext(DataContext);
@@ -58,7 +62,7 @@ function App() {
             <Route path="/support" element={<Support />} />
             <Route path="/collection-delivery" element={<Collection />} />
             </Routes>
-            {/* <br /><Footer /> */}
+            <br /><Footer />
 
           </>
         ) : (
@@ -69,9 +73,13 @@ function App() {
            
             <Route path="/" element={<AdminPage />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/viewproducts/:id" element={<ViewProductsFromOrder />} />
+            <Route path="/editshippingstatus/:id" element={<EditShippingStatus />} />
             <Route path="/view/:id" element={<View />} />
             <Route path="/products" element={< Products/>} />
-            <Route path="/update/:id" element={< Update/>} />
+            <Route path="/update/:_id" element={< Update/>} />
+            <Route path="/ViewProductdetails/:_id" element={<ViewProductDetails />} />
             <Route path="/add" element={< Add/>} />
             </Routes>
           </>

@@ -26,11 +26,11 @@ export function FetchData({ children }) {
         return response.json();
       })
       .then(data => {
-        console.log('Data fetched successfully:', data); // Debugging
+        // console.log('Data fetched successfully:', data); // Debugging
         setData(data);
       })
       .catch(error => {
-        console.error('Fetch error:', error.message); // Debugging
+        // console.error('Fetch error:', error.message); // Debugging
         setError(error.message);
       });
   }, []);
@@ -41,7 +41,7 @@ export function FetchData({ children }) {
     const userCookie = Cookies.get("user");
     const adminCookie = Cookies.get("admin");
 
-    console.log("Cookie value:", adminCookie);
+    // console.log("Cookie value:", adminCookie);
   
     if (userCookie ) {
       // Check if the cookie starts with 'j:' and remove it

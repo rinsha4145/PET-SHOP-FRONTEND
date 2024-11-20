@@ -92,7 +92,7 @@ const Navbar = () => {
   };
 
   const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
-  console.log("totalItemsInCart",totalItemsInCart);
+  // console.log("totalItemsInCart",totalItemsInCart);
   
   const totalItemsInWishlist = wish.length; 
 

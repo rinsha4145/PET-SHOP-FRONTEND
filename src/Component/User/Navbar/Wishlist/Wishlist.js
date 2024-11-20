@@ -15,8 +15,8 @@ function Wishlist() {
 
   const handleAddToCart = (item) => {
     if (addToCart) {
-      addToCart(item._id); 
-      // removewish(item._id);
+      addToCart(item); 
+      removewish(item);
     } else {
       console.error('addToCart function is not available in context');
     }

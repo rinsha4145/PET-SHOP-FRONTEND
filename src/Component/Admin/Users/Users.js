@@ -6,6 +6,7 @@ import axiosInstance from '../../../AxiosIntance';
 function Users() {
   const [data, setData] = useState();
   const [error, setError] = useState(null);
+  const[block,setBlock]=useState()
 const navigate=useNavigate();
 
 useEffect(()=>{
@@ -21,23 +22,23 @@ useEffect(()=>{
 fetchusers()
 },[])
   
-  // const handleBlock = (id) => {
-  //   try{
-  //   if (window.confirm(`Are you sure you want to block user with ID ${id}?`)) {
-  //     const response=axiosInstance.post(`/admin/updateuser/${id}`)
-  //     console.log("fghjkvbn",response.data)
+  const handleBlock = (id) => {
+    try{
+    if (window.confirm(`Are you sure you want to block user with ID ${id}?`)) {
+      const response=axiosInstance.post(`/admin/updateuser/${id}`)
+      console.log("fghjkvbn",response.data)
+      setBlock(response.data)
        
-  //         alert(`User with ID ${id} has been blocked`);
+          alert(`User with ID ${id} has been blocked`);
        
-  //         setData(prevData => prevData.map(user => 
-  //           user._id === id ? { ...user, blocked: true } : user
-  //         ));
+    }
+
         
-  //       }catch(error) {
-  //         alert("dafsgdhgm");
-  //       };
+        }catch(error) {
+          alert("dafsgdhgm");
+        };
     
-  // };
+  };
 
   // const handleUnBlock = (id) => {
   //   if (window.confirm(`Are you sure you want to Unblock user with ID ${id}?`)) {
@@ -62,31 +63,55 @@ fetchusers()
   }
 
   return (
-    <div className="table-container">
-       <button onClick={() => navigate('/admin')} className='backbutton'>Go Back</button>
-      <table className="users-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th colSpan={2}>Actions</th>
+    <div className="min-h-screen mt-2 ml-6">
+    <button
+      onClick={() => navigate("/admin")}
+      className="mb-4 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
+    >
+      Go Back
+    </button>
+    <div className="overflow-x-auto w-full">
+      <table className="mx-auto max-w-4xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden border-collapse border border-gray-300">
+        <thead className="bg-gray-900">
+          <tr className="text-white text-left">
+            <th className="font-semibold text-sm uppercase px-6 py-4">ID</th>
+            <th className="font-semibold text-sm uppercase px-6 py-4">Name</th>
+            <th className="font-semibold text-sm uppercase px-6 py-4">Email</th>
+            <th
+              className="font-semibold text-sm uppercase px-6 py-4 text-center"
+              colSpan={2}
+            >
+              Actions
+            </th>
           </tr>
         </thead>
-        <tbody>
-          {data.map(user => (
+        <tbody className="divide-y divide-gray-200">
+          {data.map((user) => (
             <tr key={user._id}>
-              <td>{user._id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td><button onClick={()=>navigate(`/view/${user._id}`)}>View</button></td>
-              <td>
-              {user.blocked === false ? (
-                  <button className="block-btn" onClick={() => handleBlock(user._id)}>
+              <td className="px-6 py-4">{user._id}</td>
+              <td className="px-6 py-4">{user.name}</td>
+              <td className="px-6 py-4">{user.email}</td>
+              <td className="px-6 py-4 text-center">
+                <button
+                  onClick={() => navigate(`/view/${user._id}`)}
+                  className="text-blue-600 hover:underline"
+                >
+                  View
+                </button>
+              </td>
+              <td className="px-6 py-4 text-center">
+                {block === false ? (
+                  <button
+                    className="text-white text-sm w-14 pb-1 bg-red-600 font-semibold  rounded-full hover:bg-red-700"
+                    onClick={() => handleBlock(user._id)}
+                  >
                     Block
                   </button>
                 ) : (
-                  <button className="unblock-btn" onClick={() => handleBlock(user._id)}>
+                  <button
+                    className="text-white text-sm w-1/3 pb-1 bg-green-600 font-semibold px-2 rounded-full hover:bg-green-700"
+                    onClick={() => handleBlock(user._id)}
+                  >
                     Unblock
                   </button>
                 )}
@@ -96,6 +121,7 @@ fetchusers()
         </tbody>
       </table>
     </div>
+  </div>
   );
 }
 

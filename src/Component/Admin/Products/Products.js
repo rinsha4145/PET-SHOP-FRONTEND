@@ -1,135 +1,186 @@
 import React, { useState, useEffect } from 'react';
 import './Products.css'; 
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
+import axiosInstance from '../../../AxiosIntance';
 
 function Products() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [filter, setFilter] = useState('all'); 
-  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // Number of products per page
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('Fetching data from http://localhost:3000/newProducts'); 
-    axios.get('http://localhost:3000/newProducts')
-      .then(response => {
-        console.log('Data fetched successfully:', response.data); 
-        setData(response.data);
-        setFilteredData(response.data);
-        
-        const uniqueCategories = Array.from(new Set(response.data.map(product => product.category)));
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.get(`admin/viewproducts`);
+        console.log('Data fetched successfully:', response); 
+        setData(response.data.product);
+        setFilteredData(response.data.product);
+        const uniqueCategories = Array.from(new Set(response.data.product.map(product => product.category)));
         setCategories(['All', ...uniqueCategories]);
-      })
-      .catch(error => {
-        console.error('Fetch error:', error.message); 
-        setError(error.message);
-      });
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchProducts();
   }, []);
 
-  useEffect(() => {
-    
-    let updatedData = data;
+  const handleCategoryChange = async (event) => {
+    const selectedCategory = event.target.value;
+    setSelectedCategory(selectedCategory);
 
-    if (selectedCategory !== 'All') {
-      updatedData = updatedData.filter(product => product.category === selectedCategory);
-    }
-
-    if (filter !== 'all') {
-      updatedData = updatedData.filter(product => product.productName.toLowerCase().includes(filter));
-    }
-
-    setFilteredData(updatedData);
-  }, [selectedCategory, filter, data]);
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  
-
-  
-  const handleDelete = (id) => {
-    if (window.confirm(`Are you sure you want to delete product with ID ${id}?`)) {
-      axios.delete(`http://localhost:3000/newProducts/${id}`)
-        .then(() => {
-          
-          setData(prevData => prevData.filter(product => product.id !== id));
-          setFilteredData(prevFilteredData => prevFilteredData.filter(product => product.id !== id));
-          alert('Product deleted successfully');
-        })
-        .catch(error => {
-          console.error('Delete error:', error.message);
-          setError(error.message);
-        });
+    if (selectedCategory === 'All') {
+      setFilteredData(data);
+    } else {
+      try {
+        const response = await axiosInstance.get(`admin/viewproductsbycategory/${selectedCategory}`);
+        setFilteredData(response.data.product);
+        setCurrentPage(1); // Reset to the first page when category changes
+      } catch (error) {
+        console.error('Error fetching category products:', error);
+      }
     }
   };
+useEffect(()=>{
+  const handleDelete = async (id) => {
+    try {
+      if (window.confirm(`Are you sure you want to delete product with ID ${id}?`)) {
+        await axiosInstance.delete(`admin/deleteproduct/${id}`);
+        alert('Product deleted successfully');
+        navigate('/products');
+      }
+    } catch (error) {
+      console.error('Delete error:', error.message);
+    }
+  };
+},[data])
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  if (!data.length) {
-    return <p>Loading...</p>;
-  }
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
-    <div className="table-container">
-      <div className="filter-container">
-        <label htmlFor="category-filter">Category:</label>
+    <div className="min-h-screen mt-2 ml-6 mt-5">
+      <div className="flex items-center mb-4 space-x-4 ml-4">
+        <label htmlFor="category-filter" className="text-sm font-medium ml-[150px]">
+          Category:
+        </label>
         <select
           id="category-filter"
           value={selectedCategory}
           onChange={handleCategoryChange}
+          className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          {categories.map(category => (
-            <option key={category} value={category}>{category}</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
           ))}
         </select>
-        <button className="add-btn" onClick={()=>navigate('/add')}>
+        <button
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
+          onClick={() => navigate("/add")}
+        >
           Add Product
         </button>
-        <button onClick={() => navigate('/admin')} className='back'>Go Back</button>
+        <button
+          onClick={() => navigate("/")}
+          className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
+        >
+          Go Back
+        </button>
       </div>
-      <table className="products-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Category</th>
-            <th className="name-header">Name</th>
-            <th>Price</th>
-            <th className="description-header">Description</th>
-            <th colSpan={2}>Action</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((product, index) => (
-            <tr key={`${product.id}-${index}`}>
-              <td>{product.id}</td>
-              <td><img src={product.src} alt={product.productName} /></td>
-              <td>{product.category}</td>
-              <td className="name-cell">{product.productName}</td>
-              <td>{product.price}</td>
-              <td className="description-cell">{product.productDescription}</td>
-              <td>
-                <button className="update-btn" onClick={() => navigate(`/update/${product.id}`)}>
-                  Update
-                </button>
-              </td>
-              <td>
-                <button className="delete-btn" onClick={() => handleDelete(product.id)}>
-                  Delete
-                </button>
-              </td>
+      <div className="overflow-x-auto w-full ml-[150px]">
+        <table className="w-[300px] whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden border-collapse border border-gray-300">
+          <thead className="bg-gray-900">
+            <tr className="text-white text-left">
+              <th className="font-semibold text-sm uppercase px-2 py-2">ID</th>
+              <th className="font-semibold text-sm uppercase px-2 py-2">Image</th>
+              <th className="font-semibold text-sm uppercase px-4 py-2">Category</th>
+              <th className="font-semibold text-sm uppercase px-2 py-2">Name</th>
+              <th className="font-semibold text-sm uppercase px-2 py-2">Price</th>
+              <th className="font-semibold text-sm uppercase px-2 py-2">View</th>
+              <th className="font-semibold text-sm uppercase px-2 py-2">Update</th>
+              <th className="font-semibold text-sm uppercase px-2 py-2">Delete</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {currentItems.map((product) => (
+              <tr key={product._id}>
+                <td className="px-2 py-2">{product._id}</td>
+                <td className="px-4 py-2">
+                  <img
+                    src={product.image}
+                    alt={product.productName}
+                    className="w-16 h-16 object-cover rounded-md"
+                  />
+                </td>
+                <td className="px-2 py-2 pl-6">{product.category}</td>
+                <td className="px-6 py-2">{product.productName}</td>
+                <td className="px-2 py-2">₹{product.price}</td>
+                <td className="px-2 py-2 text-center">
+                  <button
+                    className="text-sm bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-yellow-400"
+                    onClick={() => navigate(`/ViewProductDetails/${product._id}`)}
+                  >
+                    View
+                  </button>
+                </td>
+                <td className="px-2 py-2 text-center">
+                  <button
+                    className="text-sm bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-400"
+                    onClick={() => navigate(`/update/${product._id}`)}
+                  >
+                    Update
+                  </button>
+                </td>
+                <td className="px-2 py-2 text-center">
+                  <button
+                    className="text-sm bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500"
+                    onClick={() => handleDelete(product._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex justify-center mt-4 space-x-4">
+        <button
+          className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span className="text-gray-700">Page {currentPage} of {totalPages}</span>
+        <button
+          className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

@@ -10,7 +10,6 @@ function Cartcontext({ children }) {
   const { current } = useContext(DataContext); 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState([]);
   const [wish, setWish] = useState([]);
   const [formData, setFormData] = useState({
@@ -24,52 +23,42 @@ function Cartcontext({ children }) {
 
   //fetch cart 
   useEffect(() => {
-    const fetchCart = async () => {
-      if(current){
+    if(current){
+      const fetchCart = async () => {
         try {
           const response = await axiosInstance.get(`/viewcart`);
           const products = response.data.cart.products;
           setCart(products);
-          setLoading(false);  
         } catch (error) {
           console.error("Error fetching cart items:", error);
-          setLoading(false);
         }
-      }  
+      } 
+      fetchCart();
     };
-    fetchCart();
   }, [current]);
 
   //fetch wish
   useEffect(() => {
-    const fetchWish = async () => {
-      if(current){
+    if(current){
+      const fetchWish = async () => {
         try {
           const response = await axiosInstance.get(`/wishlist`);
           const products = response.data.getwishlist.products;
-          setWish(products); 
-          setLoading(false);  
+          setWish(products);   
         } catch (error) {
-          console.error("Error fetching cart items:", error);
-          setLoading(false);  
+          console.error("Error fetching cart items:", error); 
         }
-      };
-    }  
-    fetchWish();
+      } 
+      fetchWish();
+    } 
   }, [current]);
 
-  
-
-//loading process
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  
   //add to cart
   const addToCart = async (product) => {
     try {
       if(current){
         const response = await axiosInstance.post("/addtocart",{productId:product});
+        console.log("dff",response)
         if(response.data.updatedcart){
         setCart(response.data.updatedcart.products)
         }else if(response.data.cartsend){
@@ -114,8 +103,11 @@ function Cartcontext({ children }) {
   };
 
 // checkout the cartpage and go to the orderaddress page
-  const handlecheckout = () => {
+  const handlecheckout = async () => {
     if (cart.length > 0) {
+      const responses=await axiosInstance.post('/createorder')
+    console.log(responses)
+    setClientSecret(responses.data.data.clientsecret)
       navigate('/orderaddress');
     } else {
       alert("Your cart is empty.");
@@ -151,12 +143,9 @@ function Cartcontext({ children }) {
 //posting the orderAddress and orders to the orderpage
   const handledelivary= async()=>{
     const response = await axiosInstance.post(`/createaddress`,formData)
-    console.log(response)
+    // console.log(response)
     setAddress(response.data.newAddress.products)    
-    const responses=await axiosInstance.post('/createorder')
-    console.log(responses)
-
-    setClientSecret(responses.data.data.clientsecret)
+    
     navigate('/payment')
     
   } 

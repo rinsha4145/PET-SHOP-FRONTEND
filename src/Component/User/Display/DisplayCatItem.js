@@ -79,7 +79,7 @@ function DisplayCatItem() {
                   {wish.some(item => item._id === product._id) ? <FaHeart className='w-6 h-6'/> : <FaRegHeart className='w-6 h-6'/>}
                 </div>
 
-                <a href="javascript:;" className="mx-auto sm:ml-0 group cursor-pointer lg:mx-auto bg-white transition-all duration-500">
+                <a  className="mx-auto sm:ml-0 group cursor-pointer lg:mx-auto bg-white transition-all duration-500">
                   <div className="">
                     <img src={product.image} alt={product.productName} className="w-full aspect-square rounded-2xl object-cover" />
                   </div>

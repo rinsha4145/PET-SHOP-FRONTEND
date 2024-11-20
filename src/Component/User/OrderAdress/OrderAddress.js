@@ -7,9 +7,10 @@ import axiosInstance from "../../../AxiosIntance";
 
 function OrderAddress() {
   const { current, setCurrent } = useContext(DataContext);
-  const { cart, setCart, formData, setFormData, handledelivary } =
-    useContext(MyCartContext);
+  const { cart, setCart, formData, setFormData, handledelivary } =useContext(MyCartContext);
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,148 +19,242 @@ function OrderAddress() {
       [name]: value,
     }));
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    setTimeout(async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      // Clear the cart
       const response = await axiosInstance.delete("/clearcart");
-      setCurrent(response.data.cart);
+      setCurrent(response.data.cart); // Assuming the cart data comes here
       navigate("/payment");
-    }, 2000);
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+      alert("There was an issue with your order. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // setTimeout(async () => {
-  //   try {
-
-  //     const response = await axios.put(`http://localhost:3000/Users/${current.id}`, updatedUser);
-  //     console.log('Order and user details updated successfully:', response.data);
-
-  //     setCart([]);
-  //     localStorage.removeItem('cartData');
-
-  //     alert('Payment successful! Your order has been saved.');
-  //     navigate('/');
-  //   } catch (error) {
-  //     console.error('Error submitting order and updating user:', error);
-  //     alert('There was an issue with your payment. Please try again.');
-  //   }
-  // }, 100);
-
   return (
-     <div className="payment-container">
-      <div className="form-group">
-        <h2>Payment Page</h2>
-        <form onSubmit={handleSubmit} className="payment-form">
-          <div>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              placeholder="Full Name*"
-              required
-            />
+    <form onSubmit={handleSubmit} className="payment-form">
+    <section className="py-20 relative" >
+      <div className="w-[1000px] max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
+        <div className="w-full flex-col justify-center items-center gap-4 inline-flex">
+          <h2 className="text-center text-gray-900 text-4xl font-bold font-manrope leading-normal">
+            Order Billing
+          </h2>
+          <p className="text-center text-gray-500 text-base font-normal leading-relaxed">
+            Order billing is the process of generating invoices or bills for
+            goods or services purchased by customers.
+          </p>
+        </div>
+
+        {/* Form for collecting address info */}
+        <div className="lg:my-14 my-8 grid lg:grid-cols-2 grid-cols-1 gap-8">
+          <div className="w-full flex-col justify-start items-start gap-6 inline-flex">
+            <h4 className="text-gray-900 text-xl font-semibold leading-8">
+              Basic Information
+            </h4>
+            <div className="w-full flex-col justify-start items-start gap-8 flex">
+              {/* Full Name Field */}
+              <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Full name"
+                  value={formData.fullName}
+                  required
+                  onChange={handleChange}
+                  name="fullName"
+                  className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                />
+              </div>
+
+              {/* Phone Number Fields */}
+              <div className="w-full justify-start items-start gap-7 flex sm:flex-row flex-col">
+                <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    name="phoneNumber"
+                    placeholder="Phone Number"
+                    required
+                    className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-sm font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+                <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                    Alternative Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="alternatePhoneNumber"
+                    value={formData.alternatePhoneNumber}
+                    onChange={handleChange}
+                    placeholder="Alternate PhoneNumber"
+                    className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-sm font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+              </div>
+
+              {/* Email Field */}
+              <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  required
+                  className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-sm font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="row">
-            <input
-              type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              placeholder="Phone Number*"
-              required
-            />
-            <input
-              type="tel"
-              name="alternatePhoneNumber"
-              value={formData.alternatePhoneNumber}
-              onChange={handleChange}
-              placeholder="Alternate Phone Number"
-            />
-          </div>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-          />
+          {/* Address Information */}
+          <div className="w-full flex-col justify-start items-start gap-6 inline-flex">
+            <h4 className="text-gray-900 text-xl font-semibold leading-8">
+              Address Information
+            </h4>
+            <div className="w-full flex-col justify-start items-start gap-8 flex">
+              <div className="w-full justify-start items-start gap-7 flex sm:flex-row flex-col">
+                <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                    Country
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.country}
+                    onChange={handleChange}
+                    name="country"
+                    placeholder="country"
+                    required
+                    className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+                <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.state}
+                    onChange={handleChange}
+                    name="state"
+                    placeholder="State"
+                    required
+                    className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+              </div>
 
-          <div className="row">
-            <input
-              type="text"
-              name="pincode"
-              value={formData.pincode}
-              onChange={handleChange}
-              placeholder="PIN Code*"
-              required
-            />
-            <input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              placeholder="City*"
-              required
-            />
-            <input
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              placeholder="country*"
-              required
-            />
-             <input
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              placeholder="State*"
-              required
-            />
+              {/* Zip Code Field */}
+              <div className="w-full justify-start items-start gap-7 flex sm:flex-row flex-col">
+                <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={handleChange}
+                    name="city"
+                    placeholder="City"
+                    required
+                    className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+                <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                    Pincode
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.pincode}
+                    onChange={handleChange}
+                    name="pincode"
+                    placeholder="Pincode"
+                    required
+                    className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+              </div>
+              <div className="w-full justify-start items-start gap-7 flex sm:flex-row flex-col">
+              
+              <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                    Building Name
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.buildingName}
+                    onChange={handleChange}
+                    name="buildingName"
+                    placeholder="Building Name"
+                    required
+                    className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+                <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                    Road/Area/Colony
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.roadAreaColony}
+                    onChange={handleChange}
+                    name="roadAreaColony"
+                    placeholder="Road/Area/Colony"
+                    required
+                    className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+                </div>
+                <div className="w-full flex-col justify-start items-start gap-1.5 flex">
+                  <label className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
+                  Landmark
+                  </label>
+                  <textarea
+                    type="text"
+                    value={formData.landmark}
+                    onChange={handleChange}
+                    name="landmark"
+                    placeholder="Landmark"
+                    required
+                    className="w-full h-[100px] focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
+                  />
+                </div>
+            </div>
           </div>
+        </div>
 
-          <div>
-            <input
-              name="buildingName"
-              value={formData.buildingName}
-              onChange={handleChange}
-              placeholder="Building Name*"
-              required
-            />
-          </div>
-
-          <div>
-            <textarea
-              name="roadAreaColony"
-              value={formData.roadAreaColony}
-              onChange={handleChange}
-              placeholder="Road/Area/Colony*"
-              required
-            />
-          </div>
-
-          <div>
-            <textarea
-              name="landmark"
-              value={formData.landmark}
-              onChange={handleChange}
-              placeholder="Landmark (optional)"
-            />
-          </div>
-
+        <div className="w-full flex justify-center items-center gap-4 mt-8">
           <button
+          onClick={handledelivary}
             type="submit"
-            className="submit-button"
-            onClick={handledelivary}
+            disabled={loading}
+            className={`w-full px-6 py-3 text-lg text-white rounded-lg bg-indigo-600 shadow-md ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Submit It
+            {loading ? "Processing..." : "Proceed to Payment"}
           </button>
-        </form>
+        </div>
       </div>
-    </div>
+    </section>
+    </form>
   );
 }
 

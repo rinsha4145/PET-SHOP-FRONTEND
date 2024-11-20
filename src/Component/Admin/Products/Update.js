@@ -2,47 +2,79 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Import Axios
 import './Update.css'; // Import your CSS file
+import axiosInstance from '../../../AxiosIntance';
 
 function ProductUpdate() {
-  const { id } = useParams(); // Get the product ID from URL parameters
+  const { _id } = useParams(); // Get the product ID from URL parameters
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState({
+    title:'',
+    productName: '',
+    price: '',
+    actualPrice:'',
+    productDescription: '',
+    category: '',
+    image: '',
+  });
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/newProducts/${id}`)
-      .then(response => {
-        setProduct(response.data);
-      })
-      .catch(error => {
+    const fetch=async()=>{
+    try{
+   const response = await axiosInstance.get(`admin/viewproductsbyid/${_id}`)
+    console.log("first",response.data.product)
+        setProduct(response.data.product);
+     
+  }catch(error) {
         console.error('Fetch error:', error.message); 
         setError(error.message);
-      });
-  }, [id]);
+      };
+    }
+    fetch() 
+  }, [_id]);
+  console.log("Product object:", product);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    const update=async()=>{
+      try{
+    e.preventDefault();
+    const formData = new FormData();
+    // console.log("fffff",Object.keys(product))
+    Object.keys(product).forEach((key) => {
+      const value = product[key];
+      if (value instanceof File) {
+        formData.append(key, value); 
+        console.log("first",formData)// Append files directly
+      } else if (typeof value === 'object') {
+        formData.append(key, JSON.stringify(value)); // Serialize objects
+      } else {
+        formData.append(key, value); // Append strings and numbers
+      }
+    });
+    
     // Update logic here
-    axios.put(`http://localhost:3000/newProducts/${id}`, product, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(() => {
+    const response= await axiosInstance.patch(`admin/updateproduct/${_id}`, formData )
+    console.log("first,ress",response.data)
+    if (response.status === 200) {
       alert('Product updated successfully');
-      navigate('/products'); 
-    })
-    .catch(error => {
+      setTimeout(() => {
+          navigate(`/products`);
+      }, 1000);
+  }
+  
+    }catch(error){
       console.error('Update error:', error.message);
       setError(error.message);
-    });
+    }
+  }
+  update()
   };
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value,type,files } = event.target;
     setProduct(prevProduct => ({
       ...prevProduct,
-      [name]: value,
+      [name]:type === "file" ? files[0] : value,
     }));
   };
 
@@ -77,7 +109,24 @@ function ProductUpdate() {
             onChange={handleChange}
           />
         </label>
-        <br />
+        <label>
+          Actual Price:
+          <input
+            type="text"
+            name="actual price"
+            value={product.actualPrice}
+            onChange={handleChange}
+          />
+        </label>
+        <br />    
+        <label>
+          Title:
+          <textarea
+            name="title"
+            value={product.title}
+            onChange={handleChange}
+          />
+        </label> 
         <label>
           Description:
           <textarea
@@ -100,9 +149,9 @@ function ProductUpdate() {
         <label>
           Image URL:
           <input
-            type="text"
-            name="src"
-            value={product.src}
+            type="file"
+            name="image"
+          
             onChange={handleChange}
           />
         </label>

@@ -3,8 +3,6 @@ import './CartPage.css';
 import { MyCartContext } from '../../Context/CartContext';
 import { Link } from 'react-router-dom';
 
-
-
 function Cart() {
   
   const { cart ,  incrementQuantity, decrementQuantity, handlecheckout ,handleremove} =useContext(MyCartContext);
@@ -29,13 +27,13 @@ function Cart() {
       const itemSubtotal = parseFloat(item.productId.actualPrice) * parseInt(item.quantity, 10);
 
       
-      console.log("Item subtotal for", item.productId.productName, ":", itemSubtotal);
+      // console.log("Item subtotal for", item.productId.productName, ":", itemSubtotal);
 
       return sum + (isNaN(itemSubtotal) ? 0 : itemSubtotal);
     }, 0);
 
     
-    console.log("Total price:", total);
+    // console.log("Total price:", total);
     
     return total.toFixed(2);
   };
