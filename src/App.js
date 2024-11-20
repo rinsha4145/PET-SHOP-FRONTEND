@@ -55,7 +55,9 @@ function App() {
             <Route path="/productdetails/:_id" element={<ProductDisplay />} />
             <Route path="/cartpage" element={<CartPage />} />
             <Route path="/wishlistpage" element={<Wishlist />} />
+            <Route path="/order/:sessionid" element={<Order />} />
             <Route path="/order" element={<Order />} />
+
             <Route path="/orderaddress" element={<OrderAddress />} />
             {/* <Route path="/verifyorder" element={<OrderVerify />} /> */}
             <Route path="/payment" element={<Payment />} />

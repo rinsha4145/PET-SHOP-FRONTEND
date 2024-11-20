@@ -1,10 +1,6 @@
 import React, { useContext, useState,useEffect,useRef } from 'react';
 import logo from '../../../Assets/logo.png';
-import cartimg from '../../../Assets/cart.png';
-import userIcon from '../../../Assets/user.png';
-import wishblack from '../../../Assets/wishlistblack.png';
-import profile from '../../../Assets/profile.png';
-import order from '../../../Assets/order.png'
+
 
 import { useNavigate, Link } from 'react-router-dom';
 import { DataContext } from '../Context/DataContext'; 

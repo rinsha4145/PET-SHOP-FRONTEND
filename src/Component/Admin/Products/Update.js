@@ -113,7 +113,7 @@ function ProductUpdate() {
           Actual Price:
           <input
             type="text"
-            name="actual price"
+           name="actualPrice"
             value={product.actualPrice}
             onChange={handleChange}
           />

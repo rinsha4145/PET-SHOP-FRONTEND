@@ -24,7 +24,7 @@ function Cart() {
   
   const calculateTotalPrice = () => {
     const total = cart.reduce((sum, item) => {
-      const itemSubtotal = parseFloat(item.productId.actualPrice) * parseInt(item.quantity, 10);
+      const itemSubtotal = parseFloat(item.productId.price) * parseInt(item.quantity, 10);
 
       
       // console.log("Item subtotal for", item.productId.productName, ":", itemSubtotal);

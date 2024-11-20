@@ -29,7 +29,7 @@ function Order() {
     const fetchorders=  async() => {
     try{
       const response = await axiosInstance.get(`/oneorder`)
-      console.log("ssss",response.data.oneOrder);  
+    //   console.log("ssss",response.data.oneOrder);  
       setOneOrder(response.data.oneOrder) 
     
     }catch (error) {
@@ -37,17 +37,18 @@ function Order() {
   }
 }
     fetchorders()
-  },)
+  },[oneOrders])
 
   const {sessionid}= useParams()
   useEffect(()=>{
     if(sessionid){
         verify()
       }
-  },[])
+  },[sessionid])
+
   const verify= async()=>{
   try {
-    const respons=await axiosInstance.post("/verifyorder",{sessionId:sessionid})
+    const respons= await axiosInstance.post("/verifyorder",{session_ID:sessionid})
     console.log("verifired",respons);
   } catch (error) {
     console.log("adfadsd",error);
@@ -121,18 +122,19 @@ function Order() {
                                     <div className="grid grid-cols-5">
                                         <div className="col-span-5 lg:col-span-1 flex items-center max-lg:mt-3">
                                             <div className="flex gap-3 lg:block">
-                                                <p className="font-medium text-sm leading-7 text-black">price</p>
-                                                <p className="lg:mt-4 font-medium text-sm leading-7 text-indigo-600">{product.productId.actualPrice}</p>
+                                                <p className="font-medium text-sm leading-7 text-black">₹ price</p>
+                                                <p className="lg:mt-4 font-medium text-sm leading-7 text-indigo-600">₹{product.productId.price}</p>
                                             </div>
                                         </div>
                                         <div className="col-span-5 lg:col-span-2 flex items-center max-lg:mt-3 ">
                                             <div className="flex gap-3 lg:block">
-                                                <p className="font-medium text-sm leading-7 text-black">Status
+                                                <p className="font-medium text-sm leading-7 text-black">shipping Status
                                                 </p>
                                                 <p
                                                     className="font-medium text-sm leading-6 whitespace-nowrap py-0.5 px-3 rounded-full lg:mt-3 bg-emerald-50 text-emerald-600">
                                                     {order.shippingStatus}</p>
                                             </div>
+                                           
     
                                         </div>
                                         <div className="col-span-5 lg:col-span-2 flex items-center max-lg:mt-3">
@@ -169,7 +171,7 @@ function Order() {
                             </button>
                             <p className="font-medium text-lg text-gray-900 pl-6 py-3 max-lg:text-center">Paid using  Card <span className="text-gray-500"></span></p>
                         </div>
-                        <p className="font-semibold text-lg text-black py-6">Total Price: <span className="text-indigo-600"> {order.amount}</span></p>
+                        <p className="font-semibold text-lg text-black py-6">Total Price: <span className="text-indigo-600"> ₹{order.amount}</span></p>
                     </div>
     
                 </div>
@@ -208,7 +210,7 @@ function Order() {
                                             <h4 className="font-semibold text-gray-700 text-lg">
                                                 {product.productId.name}
                                             </h4>
-                                            <p className="text-gray-600">Price: ${product.productId.price}</p>
+                                            <p className="text-gray-600">Price: ₹{product.productId.price}</p>
                                             <p className="text-gray-600">Quantity: {product.quantity}</p>
                                             <p className="text-gray-600">Brand: {product.productId.brand}</p>
                                             <p className="text-gray-600">paymentStatus:{order.paymentStatus}</p>

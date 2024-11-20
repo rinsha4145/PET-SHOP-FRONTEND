@@ -44,19 +44,20 @@ function Products() {
       }
     }
   };
-useEffect(()=>{
   const handleDelete = async (id) => {
     try {
       if (window.confirm(`Are you sure you want to delete product with ID ${id}?`)) {
         await axiosInstance.delete(`admin/deleteproduct/${id}`);
         alert('Product deleted successfully');
+        setData(prevData => prevData.filter(product => product._id !== id));
         navigate('/products');
       }
     } catch (error) {
       console.error('Delete error:', error.message);
     }
   };
-},[data])
+  
+
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
