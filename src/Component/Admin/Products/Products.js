@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './Products.css'; 
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../AxiosIntance';
+import handleAsync from '../../../HandleAsync';
+import { toast } from 'react-toastify';
 
 function Products() {
   const [data, setData] = useState([]);
@@ -44,22 +46,21 @@ function Products() {
       }
     }
   };
-  const handleDelete = async (id) => {
-    try {
-      if (window.confirm(`Are you sure you want to delete product with ID ${id}?`)) {
-        await axiosInstance.delete(`admin/deleteproduct/${id}`);
-        alert('Product deleted successfully');
+  const handleDelete = handleAsync(async (id) => {
+    if (window.confirm(`Are you sure you want to delete the product with ID ${id}?`)) {
+        const response = await axiosInstance.delete(`admin/deleteproduct/${id}`);
         setData(prevData => prevData.filter(product => product._id !== id));
-        navigate('/products');
-      }
-    } catch (error) {
-      console.error('Delete error:', error.message);
+        if (response.status >= 200 && response.status < 300) {
+          toast.success('Product deleted successfully');
+          navigate('/products');
+        } else {
+          throw new Error(response.data.message || 'An error occurred');
+        }
     }
-  };
+  });
   
 
-
-  // Pagination logic
+  // Pagination 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
@@ -138,7 +139,7 @@ function Products() {
                 <td className="px-2 py-2">₹{product.price}</td>
                 <td className="px-2 py-2 text-center">
                   <button
-                    className="text-sm bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-yellow-400"
+                    className="text-sm bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-400"
                     onClick={() => navigate(`/ViewProductDetails/${product._id}`)}
                   >
                     View

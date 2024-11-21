@@ -1,6 +1,7 @@
 import React, { useContext,useParams } from 'react';
 import { DataContext } from '../../Context/DataContext';
 import { MyCartContext } from '../../Context/CartContext';
+import { Link } from 'react-router-dom';
 
 function Wishlist() {
  const context = useContext(DataContext); 
@@ -22,18 +23,18 @@ function Wishlist() {
     }
   };
   return (
-    <div className=" mx-auto py-10"><br/><br/><br/><br/><br/>
-  <h1 className="text-2xl font-bold mb-8">Favourites</h1>
+    <div className=" mx-auto py-8"><br/><br/><br/><br/><br/>
+  <h1 className="text-2xl font-semibold mb-3">Favourites</h1>
   {wish.length === 0 ? (
     <main class="grid place-items-center  px-5 py-20 sm:py-30 lg:px-8">
     <div class="text-center">
       
       <h1 class="mt-4 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Your wishlist is empty.</h1>
-      <p class="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Oops!!! you don't have anything in your cart.</p>
+      <p class="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Oops!!! you don't have anything in your .</p>
       <p class="text-base font-semibold text-indigo-600">let's add something</p>
       <div class="mt-10 flex flex-row items-center justify-center gap-x-6">
-      {/* <Link to='/' class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">back to home</Link> */}
-        {/* <Link to='/shop' class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">shop it</Link> */}
+      <Link to='/' class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Back to Home</Link>
+        <Link to='/shop' class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Shop It</Link>
       </div>
     </div>
   </main>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../AxiosIntance';
+import handleAsync from '../../HandleAsync';
+import { toast } from 'react-toastify';
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -20,22 +22,17 @@ function Orders() {
   }, []);
 
   // Function to handle shipping status update
-  const handleShippingStatusChange = async (id, newStatus) => {
-    try {
-      // Send the updated shipping status to the backend
-      const response = await axiosInstance.put(`admin/updateShippingStatus/${id}`, { shippingStatus: newStatus });
-      console.log('Shipping status updated:', response.data);
-
-      // Update the local state to reflect the change
-      setOrders((prevOrders) => 
-        prevOrders.map((order) => 
-          order._id === id ? { ...order, shippingStatus: newStatus } : order
-        )
-      );
-    } catch (error) {
-      console.error('Error updating shipping status:', error);
+  const handleShippingStatusChange =handleAsync( async (id, newStatus) => {
+    const response = await axiosInstance.put(`admin/updateShippingStatus/${id}`, { shippingStatus: newStatus });
+    setOrders((prevOrders) => 
+      prevOrders.map((order) => order._id === id ? { ...order, shippingStatus: newStatus } : order)
+    );
+    if (response.status >= 200 && response.status < 300) {
+      toast.success('Shipping status updated', response.data);
+    } else {
+      throw new Error(response.data.message || 'An error occurred');
     }
-  };
+  });
 
   return (
     <div className="min-h-screen mt-2 ml-6">
@@ -74,7 +71,7 @@ function Orders() {
                 </td>
                 <td className="px-6 py-4 text-center">₹{product.amount}</td>
                 <td className="px-6 py-4 text-center">
-                  <span className="text-white text-sm w-1/3 pb-1 bg-green-600 font-semibold px-2 rounded-full">
+                  <span className="text-gray text-sm w-1/3 pb-1  font-semibold px-2 rounded-full">
                     {product.paymentStatus}
                   </span>
                 </td>

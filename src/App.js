@@ -32,10 +32,10 @@ import Orders from './Component/Admin/Orders';
 import ViewProductsFromOrder from './Component/Admin/ViewProductsFromOrder';
 import EditShippingStatus from './Component/Admin/EditShippingStatus';
 import ViewProductDetails from './Component/Admin/Products/ViewProductDetails';
-
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'; 
 function App() {
   const { admin } = useContext(DataContext);
-
   return (
     <div>
         {!admin ? (
@@ -57,7 +57,6 @@ function App() {
             <Route path="/wishlistpage" element={<Wishlist />} />
             <Route path="/order/:sessionid" element={<Order />} />
             <Route path="/order" element={<Order />} />
-
             <Route path="/orderaddress" element={<OrderAddress />} />
             {/* <Route path="/verifyorder" element={<OrderVerify />} /> */}
             <Route path="/payment" element={<Payment />} />
@@ -65,14 +64,11 @@ function App() {
             <Route path="/collection-delivery" element={<Collection />} />
             </Routes>
             <br /><Footer />
-
           </>
         ) : (
           <>
            <NavbarAdmin />
             <Routes>         
-            #
-           
             <Route path="/" element={<AdminPage />} />
             <Route path="/users" element={<Users />} />
             <Route path="/orders" element={<Orders />} />
@@ -87,7 +83,20 @@ function App() {
           </>
 
         )}
-      
+      <ToastContainer   
+        autoClose={1000}  
+        position="top-center"  
+        hideProgressBar={true} 
+        closeOnClick 
+        pauseOnHover
+        draggable
+        toastStyle={{
+          width: 'auto', // Adjust width dynamically based on content
+          maxWidth: '90%', // Optional: Prevents overly wide toast on large screens
+          padding: '10px 20px', // Optional: Adds padding for better readability
+          wordBreak: 'break-word', // Handles long words gracefully
+        }}
+         />
     </div>
   );
 }

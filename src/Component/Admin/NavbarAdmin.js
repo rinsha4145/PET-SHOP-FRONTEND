@@ -5,24 +5,25 @@ import { useContext } from 'react';
 import { DataContext } from '../User/Context/DataContext';
 import { useNavigate,Link } from 'react-router-dom';
 import axiosInstance from '../../AxiosIntance';
+import handleAsync from '../../HandleAsync';
+import { toast } from 'react-toastify';
 
 const NavbarAdmin = () => {
-    const {setAdmin}=useContext(DataContext)
-    const navigate = useNavigate();
-  const handleAdminLogout = async (e) => {
-      e.preventDefault();
-      try {
-       const response= await axiosInstance.post('/admin/adminlogout');
-        setAdmin(null)
-        alert('Logout successful');
-        navigate("/")
-      } catch (error) {
-        console.error('Error occurred during logout:', error.response);
-        alert(error.response?.data?.message || 'Logout failed');
-      }   
-  };
+  const {setAdmin}=useContext(DataContext)
+  const navigate = useNavigate();
+  const handleAdminLogout =handleAsync( async (e) => {
+    e.preventDefault();
+    const response= await axiosInstance.post('/admin/adminlogout');
+    setAdmin(null)
+    if (response.status >= 200 && response.status < 300) {
+      toast.success('Admin Logout successful', response.data);
+      navigate("/login")  
+    } else {
+      throw new Error(response.data.message || 'An error occurred');
+    }
+  });
 
-  return (
+  return ( 
     <>
    
 <div className=" flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">

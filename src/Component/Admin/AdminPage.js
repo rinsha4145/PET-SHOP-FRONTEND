@@ -4,6 +4,7 @@ import './AdminPage.css'; // Import the CSS file
 import { FaUsers, FaBoxOpen, FaDollarSign, FaClipboardList } from 'react-icons/fa';
 import axiosInstance from '../../AxiosIntance';
 import { PieChart } from '@mui/x-charts/PieChart';
+import {LineChart} from '@mui/x-charts/LineChart';
 
 function AdminPage() {
   const navigate = useNavigate();
@@ -11,8 +12,8 @@ function AdminPage() {
   const [purchased, setPurchased] = useState(0);
   const [users, setUsers] = useState(0);
   const [products, setProducts] = useState(0);
-
-  // Prepare data for PieChart
+  const [dailyRevenue, setDailyRevenue] = useState([]);
+  // Data for PieChart
   const data = [
     { label: 'Total Revenue', value: revenew },
     { label: 'Total Products Sold', value: purchased },
@@ -20,31 +21,50 @@ function AdminPage() {
     { label: 'Total Products', value: products },
   ];
 
+const x1Labels = dailyRevenue?.map((item) => item.day) || [];
+const dailyData = dailyRevenue?.map((item) => item.revenew) || [];
+  // Weekly data for LineChart
+
+  const xLabels = [
+    'Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'
+  ];
+
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(`admin/totalrevenew`);
-        setRevenew(response.data.revenew);
+        // Fetch total revenue and products purchased
+        const revenueResponse = await axiosInstance.get('admin/totalrevenew');
+        setRevenew(revenueResponse.data.revenew);
 
-        const responses = await axiosInstance.get(`admin/totalpurchased`);
-        setPurchased(responses.data.totalProductsPurchased);
+        const purchasedResponse = await axiosInstance.get('admin/totalpurchased');
+        setPurchased(purchasedResponse.data.totalProductsPurchased);
 
-        const res = await axiosInstance.get(`admin/viewusers`);
-        setUsers(res.data.totalUsers);
+        const usersResponse = await axiosInstance.get('admin/viewusers');
+        setUsers(usersResponse.data.totalUsers);
 
-        const responsed = await axiosInstance.get(`admin/viewproducts`);
-        setProducts(responsed.data.totalProducts);
-        
+        const productsResponse = await axiosInstance.get('admin/viewproducts');
+        setProducts(productsResponse.data.totalProducts);
+
+        // Fetch weekly data for revenue and product count
+        const weeklyRevenueResponse = await axiosInstance.get('admin/getdailyandtotalrevenue');
+        console.log("API Response:", weeklyRevenueResponse.data);
+        setDailyRevenue(weeklyRevenueResponse.data.dailyRevenue);
+
+        // const weeklyProductCountResponse = await axiosInstance.get('admin/weeklyProductCount');
+        // setWeeklyProductCount(weeklyProductCountResponse.data.totalProductsPurchased);
+
       } catch (error) {
-        console.error('Error', error);
+        console.error('Error fetching data:', error);
       }
     };
-    fetchProducts();
+
+    fetchData();
   }, []);
 
   return (
     <>
       <div className="flex ml-[190px] mt-10 gap-[100px]">
+        {/* Stats cards */}
         <div className="flex w-[250px] h-[150px] bg-blue-100 items-center p-6 bg-white shadow-md rounded-md">
           <div className="bg-blue-100 p-3 rounded-full mr-4">
             <FaClipboardList size={30} style={{ color: 'dodgerblue' }} />
@@ -83,23 +103,45 @@ function AdminPage() {
         </div>
       </div>
 
-      <div className=" mt-10 ml-[200px] w-[500px] h-[400px]">
-        <PieChart
-          series={[
-            {
-              data: data, // Pass the data directly, not inside an array
-              innerRadius: 50,
-              outerRadius: 120,
-              paddingAngle: 5,
-              cornerRadius: 5,
-              startAngle: -45,
-              endAngle: 225,
-              cx: 150,
-              cy: 150,
-            },
-          ]}
-        />
-      </div>
+      {/* PieChart */}
+      <div className="mt-10 ml-[200px] flex gap-10 items-center">
+  {/* PieChart */}
+  <div className="w-[500px] h-[400px]">
+    <PieChart
+      series={[
+        {
+          data,
+          innerRadius: 50,
+          outerRadius: 120,
+          paddingAngle: 5,
+          cornerRadius: 5,
+          startAngle: -45,
+          endAngle: 225,
+          cx: 150,
+          cy: 150,
+        },
+      ]}
+    />
+  </div>
+
+  {/* LineChart */}
+  <div className="w-[400px] h-[300px]">
+    {dailyData.length > 0 ? (
+      <LineChart
+        width={400}
+        height={300}
+        series={[
+          { data: dailyData, label: 'Daily Revenue' },
+        ]}
+        xAxis={[{ scaleType: 'point', data: x1Labels }]}
+      />
+    ) : (
+      <p className="text-gray-500">No data available for the chart</p>
+    )}
+  </div>
+</div>
+
+      
     </>
   );
 }

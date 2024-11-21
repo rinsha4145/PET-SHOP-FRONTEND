@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../AxiosIntance';
 import { DataContext } from '../Context/DataContext';
+import { toast } from 'react-toastify';
+import  handleAsync from '../../../HandleAsync'
 
 export const MyCartContext = createContext();
 
@@ -54,25 +56,24 @@ function Cartcontext({ children }) {
   }, [current]);
 
   //add to cart
-  const addToCart = async (product) => {
-    try {
+  const addToCart = handleAsync(async (product) => {
       if(current){
         const response = await axiosInstance.post("/addtocart",{productId:product});
-        console.log("dff",response)
-        if(response.data.updatedcart){
-        setCart(response.data.updatedcart.products)
-        }else if(response.data.cartsend){
-        setCart(response.data.cartsend.products)
-        }
-        alert(response.data.message)
+        if (response.status >= 200 && response.status < 300) {
+          if(response.data.updatedcart){
+          setCart(response.data.updatedcart.products)
+          }else if(response.data.cartsend){
+          setCart(response.data.cartsend.products)
+          }
+        toast.success(response.data.message)
+      } else {
+        throw new Error(`Error: ${response.data.message || 'An error occurred'}`);
+      }
       }else{
         navigate('/login')
-        alert("please login")
+        toast.alert("please login")
       }
-    } catch (error) {
-          console.error("Error updating cart", error);
-    }
-  }
+  })
     
 //update cart
   const updateCart = async ( productId,action ) => {
@@ -95,70 +96,81 @@ function Cartcontext({ children }) {
   };
 
   //remove item from cart
-  const handleremove = async (productId) => {
-    console.log("first",productId)
-    const response = await axiosInstance.delete('/deleteitem',{data:{productId:productId}})
-    console.log("remo",response.data);
-    setCart(response.data.cartdata.products)
-  };
+  const handleremove = handleAsync(async (productId) => {
+      const response = await axiosInstance.delete('/deleteitem',{data:{productId:productId}})
+      setCart(response.data.cartdata.products)
+      if (response.status === 200 && response.status < 300) {
+        toast.success('Product removed successfully', response.data);
+      }else {
+        throw new Error(`Error: ${response.data.message || 'An error occurred'}`);
+      }
+  });
 
 // checkout the cartpage and go to the orderaddress page
-  const handlecheckout = async () => {
+  const handlecheckout = handleAsync(async () => {
     if (cart.length > 0) {
       const responses=await axiosInstance.post('/createorder')
-    console.log(responses)
-    setClientSecret(responses.data.data.clientsecret)
+      setClientSecret(responses.data.data.clientsecret)
       navigate('/orderaddress');
-    } else {
-      alert("Your cart is empty.");
+      if (responses.status >= 200 && responses.status < 300) {
+        toast.success(responses.data.message);
+      } else {
+        throw new Error(responses.data.message || 'An error occurred');
+      }
     }
-  };
+  });
 
   // add to wishlist
-  const addToWishlist = async (product) => {
-    try {
-      if(current){
-        const response = await axiosInstance.post("/addwish",{productId:product});
-        if(response.data.updatedwish){
-          setWish(response.data.updatedwish.products)
-        }else if(response.data.wishlist){
-          setWish(response.data.wishlist.products)
+  const addToWishlist = handleAsync(async (product) => {
+      if (current) {
+        const response = await axiosInstance.post("/addwish", { productId: product });
+        if (response.status >= 200 && response.status < 300) {
+          if (response.data.updatedwish) {
+            setWish(response.data.updatedwish.products);
+          } else if (response.data.wishlist) {
+            setWish(response.data.wishlist.products);
+          }
+          toast.success(response.data.message || 'Product added to wishlist successfully');
+        } else {
+          throw new Error(`Error: ${response.data.message || 'An error occurred'}`);
         }
-        // alert(response.data.message)
-      }else{
-        navigate('/login')
-        alert("please login")
+      } else {
+        navigate('/login');
+        toast.info("Please login to add items to your wishlist");
       }
-    } catch (error) {
-        console.error("Error updating wishlist", error);
-    }
-  }
+    
+  });
+  
       
 // remove item from wishlist
-  const removewish = async (productId) => {
+  const removewish = handleAsync(async (productId) => {
     const response = await axiosInstance.delete('/removewish',{data:{productId:productId}})
-    setWish(response.data.data.products)
-  };
+    if (response.status === 200 && response.status < 300) {
+      setWish(response.data.data.products)
+      toast.success('Product removed successfully', response.data);
+    }else {
+      throw new Error(`Error: ${response.data.message || 'An error occurred'}`);
+    }
+  });
 
 //posting the orderAddress and orders to the orderpage
-  const handledelivary= async()=>{
+  const handledelivary= handleAsync(async()=>{
     const response = await axiosInstance.post(`/createaddress`,formData)
-    // console.log(response)
     setAddress(response.data.newAddress.products)    
-    
     navigate('/payment')
-    
-  } 
+    if (response.status >= 200 && response.status < 300) {
+      toast.success(response.data.message);
+    } else {
+      throw new Error(response.data.message || 'An error occurred');
+    }
+  }) 
 
   //cancel a order
-  const handleCancel = async (id) => {
-    const response = await axiosInstance.post(`/ordercancel/${id}`)
-    console.log("first",response)
+ 
 
-  };
 
   return (
-    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,clientSecret,handleCancel }}>
+    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,clientSecret, }}>
       {children}
     </MyCartContext.Provider>
   );

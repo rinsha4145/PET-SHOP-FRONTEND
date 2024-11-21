@@ -71,6 +71,7 @@ const ProductDisplay = () => {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-black pr-8">
               {product.productName}
             </h2>
+            <h6>category : {product.category}</h6>
             <div className="flex items-center gap-4">
               {product.title === "Offer" ? (
                 <>

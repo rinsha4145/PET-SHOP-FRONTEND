@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import Axios
 import './Update.css'; // Import your CSS file
 import axiosInstance from '../../../AxiosIntance';
+import handleAsync from '../../../HandleAsync';
+import { toast } from 'react-toastify';
 
 function ProductUpdate() {
   const { _id } = useParams(); // Get the product ID from URL parameters
@@ -20,62 +21,44 @@ function ProductUpdate() {
 
   useEffect(() => {
     const fetch=async()=>{
-    try{
-   const response = await axiosInstance.get(`admin/viewproductsbyid/${_id}`)
-    console.log("first",response.data.product)
-        setProduct(response.data.product);
-     
-  }catch(error) {
-        console.error('Fetch error:', error.message); 
+      try{
+        const response = await axiosInstance.get(`admin/viewproductsbyid/${_id}`)
+        setProduct(response.data.product);   
+      }catch(error) {
         setError(error.message);
       };
     }
     fetch() 
   }, [_id]);
-  console.log("Product object:", product);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = handleAsync( (e) => {
     const update=async()=>{
-      try{
     e.preventDefault();
     const formData = new FormData();
-    // console.log("fffff",Object.keys(product))
     Object.keys(product).forEach((key) => {
       const value = product[key];
       if (value instanceof File) {
         formData.append(key, value); 
-        console.log("first",formData)// Append files directly
       } else if (typeof value === 'object') {
-        formData.append(key, JSON.stringify(value)); // Serialize objects
+        formData.append(key, JSON.stringify(value)); 
       } else {
-        formData.append(key, value); // Append strings and numbers
+        formData.append(key, value);
       }
     });
     
     // Update logic here
     const response= await axiosInstance.patch(`admin/updateproduct/${_id}`, formData )
-    console.log("first,ress",response.data)
-    if (response.status === 200) {
-      alert('Product updated successfully');
-      setTimeout(() => {
-          navigate(`/products`);
-      }, 1000);
-  }
-  
-    }catch(error){
-      console.error('Update error:', error.message);
-      setError(error.message);
+    if (response.status >= 200 && response.status < 300) {
+      toast.success('Product updated successfully');
+      navigate(`/products`);
     }
   }
   update()
-  };
+  });
 
   const handleChange = (event) => {
     const { name, value,type,files } = event.target;
-    setProduct(prevProduct => ({
-      ...prevProduct,
-      [name]:type === "file" ? files[0] : value,
-    }));
+    setProduct(prevProduct => ({...prevProduct,[name]:type === "file" ? files[0] : value, }));
   };
 
   if (error) {
@@ -151,7 +134,6 @@ function ProductUpdate() {
           <input
             type="file"
             name="image"
-          
             onChange={handleChange}
           />
         </label>

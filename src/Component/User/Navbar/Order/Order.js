@@ -2,16 +2,17 @@ import React,{useState,useEffect, useContext} from 'react'
 import { useNavigate,useParams } from 'react-router-dom';
 import axiosInstance from '../../../../AxiosIntance';
 import { MyCartContext } from "../../Context/CartContext";
+import { toast } from 'react-toastify';
+import handleAsync from '../../../../HandleAsync';
 
 function Order() {
   const [orders,setorder]=useState([])
-  const {handleCancel}=useContext(MyCartContext)
   const [oneOrders,setOneOrder]=useState([])
 
-  
   const navigate=useNavigate()
 
   useEffect(()=>{
+    
     const fetchorders=  async() => {
     try{
       const response = await axiosInstance.get(`/vieworder`)
@@ -25,19 +26,19 @@ function Order() {
     fetchorders()
   },[orders._id])
 
-  useEffect(()=>{
-    const fetchorders=  async() => {
-    try{
-      const response = await axiosInstance.get(`/oneorder`)
-    //   console.log("ssss",response.data.oneOrder);  
-      setOneOrder(response.data.oneOrder) 
+//   useEffect(()=>{
+//     const fetchorders=  async() => {
+//     try{
+//       const response = await axiosInstance.get(`/oneorder`)
+//     //   console.log("ssss",response.data.oneOrder);  
+//       setOneOrder(response.data.oneOrder) 
     
-    }catch (error) {
-      console.error("Error fetching cart items:", error);
-  }
-}
-    fetchorders()
-  },[oneOrders])
+//     }catch (error) {
+//       console.error("Error fetching cart items:", error);
+//   }
+// }
+//     fetchorders()
+//   },[oneOrders])
 
   const {sessionid}= useParams()
   useEffect(()=>{
@@ -46,36 +47,43 @@ function Order() {
       }
   },[sessionid])
 
-  const verify= async()=>{
-  try {
+  const verify= handleAsync(async()=>{
     const respons= await axiosInstance.post("/verifyorder",{session_ID:sessionid})
-    console.log("verifired",respons);
-  } catch (error) {
-    console.log("adfadsd",error);
+    if (respons.status === 200 && respons.status < 300) {
+        toast.success('payment completed and verified');
+    }else{
+        throw new Error(`Error: ${respons.data.message || 'An error occurred'}`);
+    }
+
+  
     
-  }
-    
-  }
+  })
+  //cancel the order
+  const handleCancel = async (id) => {
+    try {
+        setorder((prevOrders) => prevOrders.filter(order => order.id !== id));
 
-//   const handleClick = (e) => {
-//     e.preventDefault();
-//     try{
-//         const response =  axiosInstance.post(`/vieworder`)
-//     }catch (error) {
-//         console.error(error);
-//     }
+        const response = await axiosInstance.post(`/ordercancel/${id}`);
+        
+        if (response.status >= 200 && response.status < 300) {
+            toast.success("Order cancelled successfully", response.data);
+        } else {
+            throw new Error(`Error: ${response.data.message || 'An error occurred'}`);
+        }
+    } catch (error) {
+        if (error.response && error.response.status >= 500) {
+            toast.error('Server error, please try again later');
+        } else {
+            toast.error(error.response.data.message || 'Something went wrong!');
+        }
+    }
+};
 
-//   };
- 
 
-  // const handleViewDetails = (productId) => {
-  //   navigate(/orderdetailes/${productId})
-  //   console.log("View details for product:", productId);
-  // };
   return(  <>
     
-            <section className="py-24 relative">
-            {oneOrders && oneOrders.map((order) => (
+            {/* <section className="py-24 relative"> */}
+            {/* {oneOrders && oneOrders.map((order) => (
             <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
                 <h2 className="font-manrope font-bold text-4xl leading-10 text-black text-center">
                     Payment Successful
@@ -96,7 +104,7 @@ function Order() {
                         {/* <button
                             className="rounded-full py-3 px-7 font-semibold text-sm leading-7 text-white bg-indigo-600 max-lg:mt-5 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">Track
                             Your Order</button> */}
-                    </div>
+                    {/* </div>
                     {order.products && order.products.map((product, index) => (
                     <div className="w-full px-3 min-[400px]:px-6">
                         <div className="flex flex-col lg:flex-row items-center py-6 border-b border-gray-200 gap-6 w-full">
@@ -148,24 +156,19 @@ function Order() {
                                         </div>
                                     </div>
                                 </div>
-    
-    
                             </div>
                         </div>
-    
-                        
-    
                     </div>
-                    ))}
+                    ))} */}
                 
-                    <div className="w-full border-t border-gray-200 px-6 flex flex-col lg:flex-row items-center justify-between ">
+                    {/* <div className="w-full border-t border-gray-200 px-6 flex flex-col lg:flex-row items-center justify-between ">
                         <div className="flex flex-col sm:flex-row items-center max-lg:border-b border-gray-200">
                             <button onClick={()=>handleCancel(order.sessionID)}
                                 className="flex outline-0 py-6 sm:pr-6  sm:border-r border-gray-200 whitespace-nowrap gap-2 items-center justify-center font-semibold group text-lg text-black bg-white transition-all duration-500 hover:text-white">
                                 <svg className="stroke-black transition-all duration-500 group-hover:stroke-white " xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
                                     fill="none">
                                     <path d="M5.5 5.5L16.5 16.5M16.5 5.5L5.5 16.5" stroke="" stroke-width="1.6"
-                                        stroke-linecap="round" />
+                                        strokeLinecap="round" />
                                 </svg>
                                 Cancel Order
                             </button>
@@ -179,9 +182,10 @@ function Order() {
             </div>
              ))}
         
-        </section>
+        </section> */} 
+        
                                            
-<div className="bg-gray-100 min-h-screen p-6">
+    <div className="mt-5 bg-gray-100 min-h-screen p-6">
             <h1 className="text-3xl font-bold text-center mb-10 mt-12 text-gray-800">Ordered History</h1>
             <div className="max-w-4xl mx-auto space-y-8">
                 {orders && orders.map((order) => (
@@ -235,8 +239,20 @@ function Order() {
                         <p className="text-right mt-6 text-gray-700 font-medium">
                             Total Amount: ${order.amount}
                         </p>
+                        <div className="flex flex-col sm:flex-row items-center max-lg:border-b border-gray-200">
+                            <button onClick={()=>handleCancel(order.sessionID)}
+                                className="flex outline-0 py-6 sm:pr-6  sm:border-r border-gray-200 whitespace-nowrap gap-2 items-center justify-center font-semibold group text-lg text-black bg-white transition-all duration-500 hover:text-white">
+                                <svg className="stroke-black transition-all duration-500 group-hover:stroke-white " xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
+                                    fill="none">
+                                    <path d="M5.5 5.5L16.5 16.5M16.5 5.5L5.5 16.5" stroke="" stroke-width="1.6"
+                                        strokeLlinecap="round" />
+                                </svg>
+                                Cancel Order
+                            </button>
+                        </div>
                     </div>
                 ))}
+                       
             </div>
         </div>
          </>

@@ -3,15 +3,15 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '../../AxiosIntance';
 
 function ViewProductsFromOrder() {
-  const [data, setData] = useState(null); // Start with `null` to handle loading states
+  const [data, setData] = useState(null); 
   const { id } = useParams();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axiosInstance.get(`admin/orders/${id}`);
-        console.log('API Response:', response.data); // Log the response to check its structure
-        setData(response.data); // Update state with the full order data
+        console.log('API Response:', response.data); 
+        setData(response.data);
       } catch (error) {
         console.error('Error fetching cart items:', error);
       }
@@ -21,20 +21,18 @@ function ViewProductsFromOrder() {
   }, [id]);
 
   if (!data) {
-    // Handle loading state
     return <div>Loading...</div>;
   }
 
   if (!Array.isArray(data.products)) {
-    // Handle unexpected API response
     return <div>No products available in this order.</div>;
   }
 
   return (
-    <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto"><br/><br/><br/><br/><br/>
+    <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mt-0 mx-auto">
       {data.products.map((product) => (
-        <div key={product._id} className="w-full px-3 min-[400px]:px-6">
-          <div className="flex flex-col lg:flex-row items-center py-6 border-b border-gray-200 gap-6 w-full">
+        <div key={product._id} className="w-full  min-[400px]:px-6">
+          <div className="flex flex-col lg:flex-row items-center  border-b border-gray-200 gap-6 w-full">
             <div className="img-box max-lg:w-full">
               <img
                 src={product.productId.image}

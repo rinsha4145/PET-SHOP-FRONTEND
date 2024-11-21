@@ -25,7 +25,6 @@ function OrderAddress() {
     setLoading(true);
 
     try {
-      // Clear the cart
       const response = await axiosInstance.delete("/clearcart");
       setCurrent(response.data.cart); // Assuming the cart data comes here
       navigate("/payment");

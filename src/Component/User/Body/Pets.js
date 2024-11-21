@@ -19,7 +19,7 @@ const categories = [
 
 const Pets = () => {
     const navigate = useNavigate();
-
+    
     const handleclick = (path) => {
         navigate(path);
     };

@@ -53,7 +53,7 @@ const Navbar = () => {
       await axiosInstance.post('/logout',{},{withCredentials:true});
       setCurrent(null)
       alert('Logout successful');
-      navigate("/")
+      navigate("/login")
     } catch (error) {
       console.error('Error occurred during logout:', error.response);
       alert(error.response?.data?.message || 'Logout failed');

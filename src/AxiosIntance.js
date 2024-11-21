@@ -18,6 +18,40 @@ axiosInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+const refreshtoken = async () => {
+  try {
+    // Call refresh token API endpoint
+    const response = await axiosInstance.post("/refreshtoken");
+    console.log("Token refreshed successfully");
+    return response.data.accessToken; // Return the new token for further use
+  } catch (error) {
+    console.error("Error refreshing token:", error);
+    throw error; // Rethrow error to handle logout or fallback
+  }
+};
+
+// Add Axios response interceptor
+axiosInstance.interceptors.response.use(
+  (response) => response, // Pass successful responses through
+  async (error) => {
+    const originalRequest = error.config;
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true; // Avoid retry loops
+
+      try {
+        await refreshtoken(); // Call refresh token function
+        return axiosInstance(originalRequest); // Retry the original request
+      } catch (refreshError) {
+        console.error("Token refresh failed, redirecting to login:", refreshError);
+        // Handle logout or redirect to login
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 // Response interceptor for handling common errors or logging
 axiosInstance.interceptors.response.use(
