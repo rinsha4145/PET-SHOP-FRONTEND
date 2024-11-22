@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { DataContext } from "../Context/DataContext";
 import { MyCartContext } from "../Context/CartContext";
 import axiosInstance from "../../../AxiosIntance";
+import handleAsync from "../../../HandleAsync";
+import { toast } from "react-toastify";
 
 function OrderAddress() {
   const { current, setCurrent } = useContext(DataContext);
-  const { cart, setCart, formData, setFormData, handledelivary } =useContext(MyCartContext);
+  const { cart, setCart, formData, setFormData, handledelivary, handlecheckout} =useContext(MyCartContext);
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,24 +24,22 @@ function OrderAddress() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =handleAsync(async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    try {
+    handlecheckout()
       const response = await axiosInstance.delete("/clearcart");
       setCurrent(response.data.cart); // Assuming the cart data comes here
-      navigate("/payment");
-    } catch (error) {
-      console.error("Error clearing cart:", error);
-      alert("There was an issue with your order. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (response.status >= 200 && response.status < 300) {
+        toast.success(response.data.message);
+      } else {
+        throw new Error(response.data.message || 'An error occurred');
+      }
+  });
 
   return (
-    <form onSubmit={handleSubmit} className="payment-form">
+    <>
+    <form  className="payment-form">
     <section className="py-20 relative" >
       <div className="w-[1000px] max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
         <div className="w-full flex-col justify-center items-center gap-4 inline-flex">
@@ -119,6 +121,18 @@ function OrderAddress() {
                   className="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-sm font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex"
                 />
               </div>
+              <div className="w-full flex justify-center items-center gap-4 mt-[80px]">
+          <button
+            type="submit"
+            onClick={handledelivary}
+            disabled={loading}
+            className={`w-full px-6 py-3 text-lg text-white rounded-lg bg-indigo-600 shadow-md ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            save the Address
+          </button>
+        </div>
             </div>
           </div>
 
@@ -239,21 +253,42 @@ function OrderAddress() {
           </div>
         </div>
 
-        <div className="w-full flex justify-center items-center gap-4 mt-8">
-          <button
-          onClick={handledelivary}
-            type="submit"
-            disabled={loading}
-            className={`w-full px-6 py-3 text-lg text-white rounded-lg bg-indigo-600 shadow-md ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
-            {loading ? "Processing..." : "Proceed to Payment"}
-          </button>
-        </div>
+        
       </div>
     </section>
     </form>
+    
+    {/* <div>
+    <h3 className="text-xl font-semibold mb-2">Your Ordered Products</h3>
+    <div className="space-y-4">
+      {cart.map((product) => (
+        <div
+          key={product.productId._id}
+          className="flex items-center border p-4 rounded-md"
+        >
+          <img
+            src={product.productId.image}
+            alt={product.productId.productName}
+            className="w-16 h-16 object-cover rounded-md"
+          />
+          <div className="ml-4 flex-1">
+            <h4 className="font-bold">{product.productId.productName}</h4>
+            <p>Price: ₹{product.productId.price}</p> */}
+            {/* <p>Quantity: {product.quantity}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <button
+      type="submit"
+      onClick={handleSubmit}
+      className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-blue-600"
+    >
+                 {loading ? "Processing..." : "Proceed to Payment"}
+
+    </button> */}
+    </>
   );
 }
 

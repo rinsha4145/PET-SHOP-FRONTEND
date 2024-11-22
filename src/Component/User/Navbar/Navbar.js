@@ -16,6 +16,8 @@ import {
   LogOut
 } from 'lucide-react';
 import axiosInstance from '../../../AxiosIntance';
+import handleAsync from '../../../HandleAsync';
+import { toast } from 'react-toastify';
 
 
 const Navbar = () => {
@@ -47,20 +49,20 @@ const Navbar = () => {
       navigate('/login'); 
     }
   };
-  const handleLogout = async (e) => {
+  const handleLogout = handleAsync( async (e) => {
     e.preventDefault();
-    try {
-      await axiosInstance.post('/logout',{},{withCredentials:true});
+      const  response=await axiosInstance.post('/logout',{},{withCredentials:true});
       setCurrent(null)
-      alert('Logout successful');
-      navigate("/login")
-    } catch (error) {
-      console.error('Error occurred during logout:', error.response);
-      alert(error.response?.data?.message || 'Logout failed');
-    setIsDropdownOpen(false);
-    navigate('/login');
-    }
-  };
+      if (response.status >= 200 && response.status < 300) {
+        toast.success('Logout successful', response.data);
+        navigate("/login")
+      } else {
+        throw new Error(response.data.message || 'An error occurred');
+      }
+      setIsDropdownOpen(false);
+      navigate('/login');
+    
+  });
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -74,7 +76,6 @@ const Navbar = () => {
         const product = data.find(
           (product) => product.productName.toLowerCase() === query
         );
-
         if (product) {
           navigate(`/productdetails/${product.id}`);
         } else {
@@ -88,8 +89,6 @@ const Navbar = () => {
   };
 
   const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
-  // console.log("totalItemsInCart",totalItemsInCart);
-  
   const totalItemsInWishlist = wish.length; 
 
   return (

@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import './CartPage.css';
 import { MyCartContext } from '../../Context/CartContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa'; // Import the 'X' icon
 
 function Cart() {
-  const { cart, incrementQuantity, decrementQuantity, handlecheckout, handleremove } = useContext(MyCartContext);
+  const navigate = useNavigate();
+
+  const { cart, incrementQuantity, decrementQuantity, handleremove } = useContext(MyCartContext);
 
   const calculateSubtotal = (price, qty) => {
     const validPrice = parseFloat(price);
@@ -106,7 +108,7 @@ function Cart() {
             </div>
             <button
               className="w-full mt-6 bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition"
-              onClick={handlecheckout}
+              onClick={()=>navigate('/orderaddress')}
             >
               Checkout
             </button>

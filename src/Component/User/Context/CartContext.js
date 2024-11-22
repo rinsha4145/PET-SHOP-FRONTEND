@@ -20,6 +20,7 @@ function Cartcontext({ children }) {
     state: '',city: '',country:'',
     buildingName: '',roadAreaColony: '',landmark:''});
   const [address,setAddress]=useState()
+  const [latestAddress,setLatestAddress]=useState()
 
   const [clientSecret,setClientSecret]=useState()
 
@@ -66,12 +67,12 @@ function Cartcontext({ children }) {
           setCart(response.data.cartsend.products)
           }
         toast.success(response.data.message)
-      } else {
+        } else {
         throw new Error(`Error: ${response.data.message || 'An error occurred'}`);
-      }
-      }else{
-        navigate('/login')
-        toast.alert("please login")
+        }
+      }else {
+        navigate('/login');
+        toast.info("Please login to add items to your cart");
       }
   })
     
@@ -107,11 +108,12 @@ function Cartcontext({ children }) {
   });
 
 // checkout the cartpage and go to the orderaddress page
-  const handlecheckout = handleAsync(async () => {
+  const handlecheckout = handleAsync( async () => {
     if (cart.length > 0) {
       const responses=await axiosInstance.post('/createorder')
       setClientSecret(responses.data.data.clientsecret)
-      navigate('/orderaddress');
+      navigate('/payment')
+      
       if (responses.status >= 200 && responses.status < 300) {
         toast.success(responses.data.message);
       } else {
@@ -153,24 +155,39 @@ function Cartcontext({ children }) {
     }
   });
 
-//posting the orderAddress and orders to the orderpage
-  const handledelivary= handleAsync(async()=>{
-    const response = await axiosInstance.post(`/createaddress`,formData)
-    setAddress(response.data.newAddress.products)    
-    navigate('/payment')
+//posting the orderAddress 
+const handledelivary = handleAsync(async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axiosInstance.post('/createaddress', formData);
+    console.log("Response:", response);
+
+    navigate('/verifyorder');
     if (response.status >= 200 && response.status < 300) {
+      setLatestAddress(response.data.newAddress)
+      setAddress(response.data.newAddress.products); // Update the address state
       toast.success(response.data.message);
+      
+      // Add a slight delay before navigating
+      setTimeout(() => {
+       
+      }, 500); // Delay in milliseconds (adjust as needed)
     } else {
       throw new Error(response.data.message || 'An error occurred');
     }
-  }) 
+  } catch (error) {
+    console.error('Error:', error);
+    toast.error(error.message || 'An error occurred');
+  }
+});
+
 
   //cancel a order
  
 
 
   return (
-    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,clientSecret, }}>
+    <MyCartContext.Provider value={{  cart, setCart, addToCart, handleremove, incrementQuantity, decrementQuantity, handlecheckout,wish,setWish,addToWishlist,removewish,formData,setFormData,handledelivary,clientSecret,latestAddress }}>
       {children}
     </MyCartContext.Provider>
   );

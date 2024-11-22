@@ -34,6 +34,8 @@ import EditShippingStatus from './Component/Admin/EditShippingStatus';
 import ViewProductDetails from './Component/Admin/Products/ViewProductDetails';
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'; 
+import ViewAdresss from './Component/Admin/Users/ViewAddress';
+import ViewAddre from './Component/User/Navbar/Order/viewAddress';
 function App() {
   const { admin } = useContext(DataContext);
   return (
@@ -58,10 +60,12 @@ function App() {
             <Route path="/order/:sessionid" element={<Order />} />
             <Route path="/order" element={<Order />} />
             <Route path="/orderaddress" element={<OrderAddress />} />
-            {/* <Route path="/verifyorder" element={<OrderVerify />} /> */}
+            <Route path="/viewaddress/:id" element={<ViewAddre />} />
+            
+            <Route path="/verifyorder" element={<OrderVerify />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/support" element={<Support />} />
-            <Route path="/collection-delivery" element={<Collection />} />
+              <Route path="/collection-delivery" element={<Collection />} />
             </Routes>
             <br /><Footer />
           </>
@@ -78,6 +82,7 @@ function App() {
             <Route path="/products" element={< Products/>} />
             <Route path="/update/:_id" element={< Update/>} />
             <Route path="/ViewProductdetails/:_id" element={<ViewProductDetails />} />
+            <Route path="/ViewAddress/:_id" element={<ViewAdresss />} />
             <Route path="/add" element={< Add/>} />
             </Routes>
           </>

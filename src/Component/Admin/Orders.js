@@ -46,6 +46,8 @@ function Orders() {
               <th className="font-semibold text-sm uppercase px-6 py-4 text-center">Amount</th>
               <th className="font-semibold text-sm uppercase px-6 py-4 text-center">Payment Status</th>
               <th className="font-semibold text-sm uppercase px-6 py-4 text-center">Shipping Status</th>
+              <th className="font-semibold text-sm uppercase px-6 py-4 text-center">Address</th>
+
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -87,6 +89,11 @@ function Orders() {
                     <option value="Delivered">Delivered</option>
                     <option value="Cancelled">Cancelled</option>
                   </select>
+                </td>
+                <td className="px-6 py-4 text-center">
+                  <button onClick={() => navigate(`/ViewAddress/${product._id}`)} className="text-purple-800 hover:bg-white hover:underline">
+                    View Address
+                  </button>
                 </td>
               </tr>
             ))}

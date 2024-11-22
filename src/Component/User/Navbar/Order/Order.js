@@ -8,6 +8,7 @@ import handleAsync from '../../../../HandleAsync';
 function Order() {
   const [orders,setorder]=useState([])
   const [oneOrders,setOneOrder]=useState([])
+  
 
   const navigate=useNavigate()
 
@@ -225,13 +226,13 @@ function Order() {
                                     </div>
                                     
                                     {/* View Details Button with Right Arrow Icon */}
-                                    {/* <button 
-                                        onClick={() => handleViewDetails(product.productId._id)} 
+                                    <button 
+                                        onClick={() => navigate(`/viewaddress/${order._id}`)} 
                                         className="text-indigo-600 hover:text-indigo-800 flex items-center"
                                     >
-                                        <span className="mr-2">View Details</span>
+                                        <span className="mr-2">View Address Details</span>
                                         <i className="fa-solid fa-chevron-down fa-rotate-270 text-lg"></i>
-                                    </button> */}
+                                    </button>
                                 </div>
                             ))}
                         </div>
@@ -244,8 +245,8 @@ function Order() {
                                 className="flex outline-0 py-6 sm:pr-6  sm:border-r border-gray-200 whitespace-nowrap gap-2 items-center justify-center font-semibold group text-lg text-black bg-white transition-all duration-500 hover:text-white">
                                 <svg className="stroke-black transition-all duration-500 group-hover:stroke-white " xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
                                     fill="none">
-                                    <path d="M5.5 5.5L16.5 16.5M16.5 5.5L5.5 16.5" stroke="" stroke-width="1.6"
-                                        strokeLlinecap="round" />
+                                    <path d="M5.5 5.5L16.5 16.5M16.5 5.5L5.5 16.5" stroke="" strokeWidth="1.6"
+                                        strokellinecap="round" />
                                 </svg>
                                 Cancel Order
                             </button>

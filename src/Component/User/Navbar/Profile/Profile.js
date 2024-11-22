@@ -3,22 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import { DataContext } from '../../Context/DataContext';
 import './Profile.css';
 import axiosInstance from '../../../../AxiosIntance';
+import { toast } from 'react-toastify';
+import handleAsync from '../../../../HandleAsync';
 
 function Profile() {
     const { current,setCurrent  } = useContext(DataContext);
     const navigate=useNavigate();
-    const handleLogout = async (e) => {
+    const handleLogout = handleAsync( async (e) => {
         e.preventDefault();
-        try {
-            await axiosInstance.post('/logout',{},{withCredentials:true});
-            setCurrent(null)
-            alert('Logout successful');
-            navigate("/")
-        } catch (error) {
-            console.error('Error occurred during logout:', error.response);
-            alert(error.response?.data?.message || 'Logout failed');
-        }
-    };
+          const  response=await axiosInstance.post('/logout',{},{withCredentials:true});
+          setCurrent(null)
+          if (response.status >= 200 && response.status < 300) {
+            toast.success('Logout successful', response.data);
+            navigate("/login")
+          } else {
+            throw new Error(response.data.message || 'An error occurred');
+          }
+          navigate('/login');
+        
+      });
       
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100 bg-transperant">

@@ -11,7 +11,7 @@ function ViewProductsFromOrder() {
       try {
         const response = await axiosInstance.get(`admin/orders/${id}`);
         console.log('API Response:', response.data); 
-        setData(response.data);
+        setData(response.data.allOrders);
       } catch (error) {
         console.error('Error fetching cart items:', error);
       }
@@ -30,7 +30,7 @@ function ViewProductsFromOrder() {
 
   return (
     <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mt-0 mx-auto">
-      {data.products.map((product) => (
+      {data.addressID.map((product) => (
         <div key={product._id} className="w-full  min-[400px]:px-6">
           <div className="flex flex-col lg:flex-row items-center  border-b border-gray-200 gap-6 w-full">
             <div className="img-box max-lg:w-full">
