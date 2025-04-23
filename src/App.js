@@ -30,7 +30,6 @@ import Payment from './Component/User/Payment/Payment';
 import OrderVerify from './Component/User/Navbar/Order/OrderVerify';
 import Orders from './Component/Admin/Orders';
 import ViewProductsFromOrder from './Component/Admin/ViewProductsFromOrder';
-import EditShippingStatus from './Component/Admin/EditShippingStatus';
 import ViewProductDetails from './Component/Admin/Products/ViewProductDetails';
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'; 
@@ -77,7 +76,6 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/viewproducts/:id" element={<ViewProductsFromOrder />} />
-            <Route path="/editshippingstatus/:id" element={<EditShippingStatus />} />
             <Route path="/view/:id" element={<View />} />
             <Route path="/products" element={< Products/>} />
             <Route path="/update/:_id" element={< Update/>} />
