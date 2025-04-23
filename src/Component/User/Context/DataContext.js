@@ -33,6 +33,7 @@ export function FetchData({ children }) {
       });
   }, []);
 
+  console.log(data)
 //get cookies
   useEffect(() => {
     const userCookie = Cookies.get("user");
