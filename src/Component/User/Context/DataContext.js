@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axiosInstance from '../../../AxiosIntance';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import { toast } from 'react-toastify';
 import  handleAsync from '../../../HandleAsync'
 
@@ -35,28 +35,28 @@ export function FetchData({ children }) {
 
   console.log(data)
 //get cookies
-  useEffect(() => {
-    const userCookie = Cookies.get("user");
-    const adminCookie = Cookies.get("admin");
-    if (userCookie ) {
-      // Check if the cookie starts with 'j:' and remove it
-      const userJson = userCookie.startsWith("j:") ? userCookie.slice(2) : userCookie;
-      try {
-        const user = JSON.parse(userJson);
-        setCurrent(user)
-      } catch (error) {
-      }
-    }else if(adminCookie){
-      const adminJson = adminCookie.startsWith("j:") ? adminCookie.slice(2) : adminCookie;
-      try {
-        const admin = JSON.parse(adminJson);
-        setAdmin(admin)
-      } catch (error) {
-      }
-    } else {
-      console.log("User cookie not found");
-    }
-  },[datas]);
+  // useEffect(() => {
+  //   const userCookie = Cookies.get("user");
+  //   const adminCookie = Cookies.get("admin");
+  //   if (userCookie ) {
+  //     // Check if the cookie starts with 'j:' and remove it
+  //     const userJson = userCookie.startsWith("j:") ? userCookie.slice(2) : userCookie;
+  //     try {
+  //       const user = JSON.parse(userJson);
+  //       setCurrent(user)
+  //     } catch (error) {
+  //     }
+  //   }else if(adminCookie){
+  //     const adminJson = adminCookie.startsWith("j:") ? adminCookie.slice(2) : adminCookie;
+  //     try {
+  //       const admin = JSON.parse(adminJson);
+  //       setAdmin(admin)
+  //     } catch (error) {
+  //     }
+  //   } else {
+  //     console.log("User cookie not found");
+  //   }
+  // },[datas]);
 
 //handle change
   const handleChange = (e) => {
@@ -71,6 +71,13 @@ export function FetchData({ children }) {
       if (response.status === 200 && response.status < 300) {
         toast.success('Login successful');
         setDatas({ email: '', password: '' });
+        const logged =response.data.user
+        if(logged.admin){
+          setAdmin(logged)
+        }
+        else{
+        setCurrent(logged)
+        }
         navigate('/')
       }else{
         throw new Error(`Error: ${response.data.message || 'An error occurred'}`);
